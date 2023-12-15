@@ -5,16 +5,18 @@ using UnityEngine;
 
 namespace Metelab.PeakGameCase
 {
-    public enum GridItemType:int
+    public enum NodeItemType:int
     {
+        NONE = -1,
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
         CUBE_BLUE = 2,
         CUBE_GREEN = 3,
-        CUBE_PURPLE = 4
+        CUBE_PURPLE = 4,
+        MAX = 5
     }
 
-    public enum GridItemCreateType:int
+    public enum NodeItemCreateType:int
     {
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
@@ -22,7 +24,8 @@ namespace Metelab.PeakGameCase
         CUBE_GREEN = 3,
         CUBE_PURPLE = 4,
         CUBE_RANDOM = 5,
-        MAX = 6
+        EMPTY = 6,
+        MAX = 7
     }
 
     public class Constants : MonoBehaviour

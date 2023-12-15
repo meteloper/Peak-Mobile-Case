@@ -39,7 +39,7 @@ namespace Metelab.PeakGameCase
 
         public void CreateGrid()
         {
-            ArrayGridNodes = new GridNode[gridSO.GridItemsCreateType.Length];
+            ArrayGridNodes = new GridNode[gridSO.BaseLayer.GridItemsCreateType.Length];
             float spaceX = GridNodePrefab.RectTransform.rect.width;
             float spaceY = GridNodePrefab.RectTransform.rect.height;
             Vector2 marginOffSet = new Vector2(Constants.GRID_MARGINS.left, Constants.GRID_MARGINS.right);
@@ -48,15 +48,35 @@ namespace Metelab.PeakGameCase
             {
                 for (int x = 0; x < gridSO.width; x++)
                 {
-                    int index = x * gridSO.width + y;
+                    //Creating Nodes
+                    int index = y * gridSO.width + x;
                     ArrayGridNodes[index] = Instantiate(GridNodePrefab, GridNodesParent);
                     ArrayGridNodes[index].name = $"Node[{x},{y}]";
                     ArrayGridNodes[index].RectTransform.anchoredPosition = new Vector2(x * spaceX, y * spaceY) + marginOffSet;
-                    GridItemBase gridItem = Instantiate(GridNodeItemPrefabsSO.Instance.GetGridItemPrefab((GridItemType)(int)gridSO.GridItemsCreateType[index]), ArrayGridNodes[index].RectTransform);
-                    ArrayGridNodes[index].GridItems.Add(gridItem);
-                    gridItem.RectTransform.anchoredPosition = Vector2.zero;
+
+                    //Creating Nodes' Items
+                    for (int i = 0; i < gridSO.Layers.Length; i++)
+                    {
+
+                        
+                        NodeItemType itemType = Utilities.CreateTypeToItemType(gridSO.Layers[i].GridItemsCreateType[index]);
+                        Metelab.Log("("+x+","+y+")  "+i+" "+ gridSO.Layers[i].GridItemsCreateType[index].ToString()+" "+ itemType);
+
+                        if (itemType == NodeItemType.NONE)
+                            continue;
+
+                        GridItemBase itemPrefab = GridNodeItemPrefabsSO.Instance.GetGridItemPrefab(itemType);
+                        GridItemBase gridItem = Instantiate(itemPrefab, ArrayGridNodes[index].RectTransform);
+                        ArrayGridNodes[index].GridItems.Add(gridItem);
+                        gridItem.RectTransform.anchoredPosition = Vector2.zero;
+                    }
                 }
             }
+        }
+
+        private void CreateTypeToNodeType()
+        {
+
         }
 
    

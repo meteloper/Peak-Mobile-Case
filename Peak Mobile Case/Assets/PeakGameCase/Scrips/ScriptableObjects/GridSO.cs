@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -11,7 +12,17 @@ namespace Metelab.PeakGameCase
     {
         public int height = 5;
         public int width = 5;
-        public GridItemCreateType[] GridItemsCreateType;
+        public int maxMoveCount = 25;
+        public GridLayer[] Layers;
+        public GridLayer BaseLayer
+        {
+            get
+            {
+                return Layers[0];
+            }
+        }
+
+  
 
         [Header("Tools")]
         [SerializeField]private string GridItemCreateTypeFromString;
@@ -31,23 +42,22 @@ namespace Metelab.PeakGameCase
                 return;
             }
 
-            if (GridItemsCreateType.Length % height != 0)
+            if (Layers[0].GridItemsCreateType.Length % height != 0)
             {
-                Metelab.LogWarning($"{nameof(GridItemsCreateType)}.Lenght % {nameof(height)} should be 0");
+                Metelab.LogWarning($"Base layer lenght % {nameof(height)} should be 0");
+                return;
+            }
+                
+            if (Layers[0].GridItemsCreateType.Length % width != 0)
+            {
+                Metelab.LogWarning($"Base layer lenght % {nameof(width)} should be 0");
                 return;
             }
                 
 
-            if (GridItemsCreateType.Length % width != 0)
+            if (Layers[0].GridItemsCreateType.Length != height* width)
             {
-                Metelab.LogWarning($"{nameof(GridItemsCreateType)}.Lenght % {nameof(width)} should be 0");
-                return;
-            }
-                
-
-            if (GridItemsCreateType.Length != height* width)
-            {
-                Metelab.LogWarning($"{nameof(GridItemsCreateType)}.Lenght should be equal to {nameof(height)}*{nameof(width)}. ({GridItemsCreateType.Length}:{height * width})");
+                Metelab.LogWarning($"Base layer lenght should be equal to {nameof(height)}*{nameof(width)}. ({Layers[0].GridItemsCreateType.Length}:{height * width})");
                 return;
             }
 
@@ -55,26 +65,34 @@ namespace Metelab.PeakGameCase
 
         }
 
+
+        public int loadTargetLayer;
         public void LoadFromString()
         {
-            GridItemsCreateType = new GridItemCreateType[GridItemCreateTypeFromString.Length];
+            Layers[loadTargetLayer].GridItemsCreateType = new NodeItemCreateType[GridItemCreateTypeFromString.Length];
 
             for (int i = 0; i < GridItemCreateTypeFromString.Length; i++)
             {
                 int index = int.Parse(GridItemCreateTypeFromString[i].ToString());
 
-                if(index < (int)GridItemCreateType.MAX)
+                if(index < (int)NodeItemCreateType.MAX)
                 {
-                    GridItemsCreateType[i] = (GridItemCreateType)index;
+                    Layers[loadTargetLayer].GridItemsCreateType[i] = (NodeItemCreateType)index;
                 }
                 else
                 {
-                    Metelab.LogWarning($"Value = {index}. Values should be less then {(int)GridItemCreateType.MAX}");
+                    Metelab.LogWarning($"Value = {index}. Values should be less then {(int)NodeItemCreateType.MAX}");
                 }
             }
         }
 
 #endif
 
+    }
+
+    [Serializable]
+    public struct GridLayer
+    {
+        public NodeItemCreateType[] GridItemsCreateType;
     }
 }
