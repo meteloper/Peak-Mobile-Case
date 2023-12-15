@@ -36,7 +36,7 @@ namespace Metelab
                 return mCanvasGroup;
             }
         }
-        [Header("LudumPanel")]
+        [Header("MetePanel")]
         public MetePanelSO PanelData;
         public RectTransform PanelSafeArea;
         private Vector2 PanelBaseAnchorMin;

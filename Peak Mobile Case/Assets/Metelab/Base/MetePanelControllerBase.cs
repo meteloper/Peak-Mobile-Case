@@ -13,6 +13,7 @@ namespace Metelab
     {
         public static K current;
 
+        [Tooltip("It work if")]
         [SerializeField] private short StarterPanel = -1;
         [SerializeField] private List<MetePanel> PanelList = new List<MetePanel>();
         [SerializeField] private short CurrentActivePanel = -1;
@@ -43,13 +44,30 @@ namespace Metelab
                 ShowPanel(StarterPanel);
         }
 
-        public abstract MetePanel ShowPanel(KEnum panelName);
-        public abstract T ShowPanel<T>(KEnum panelName) where T : MetePanel;
-        public abstract void HidePanel(KEnum panelName);
-        public abstract MetePanel GetPanel(KEnum panelName);
-        public abstract T GetPanel<T>(KEnum panelName) where T : MetePanel;
+        public abstract short ConvertToIndex(KEnum panelName);
 
-        protected MetePanel ShowPanel(short panel)
+        public virtual MetePanel ShowPanel(KEnum panelName)
+        {
+            return ShowPanel(ConvertToIndex(panelName));
+        }
+        public virtual T ShowPanel<T>(KEnum panelName) where T : MetePanel
+        {
+            return ShowPanel<T>(ConvertToIndex(panelName));
+        }
+        public virtual void HidePanel(KEnum panelName)
+        {
+            HidePanel(ConvertToIndex(panelName));
+        }
+        public virtual MetePanel GetPanel(KEnum panelName)
+        {
+            return GetPanel(ConvertToIndex(panelName));
+        }
+        public virtual T GetPanel<T>(KEnum panelName) where T : MetePanel
+        {
+            return GetPanel<T>(ConvertToIndex(panelName));
+        }
+
+        private MetePanel ShowPanel(short panel)
         {
             MetePanel targetPanel = PanelList[(int)panel];
 
@@ -68,12 +86,12 @@ namespace Metelab
             return targetPanel;
         }
 
-        protected T ShowPanel<T>(short panel) where T : MetePanel
+        private T ShowPanel<T>(short panel) where T : MetePanel
         {
             return (T)ShowPanel(panel);
         }
 
-        protected void HidePanel(short panel)
+        private void HidePanel(short panel)
         {
             PanelList[(int)panel].HidePanel();
 
@@ -84,7 +102,7 @@ namespace Metelab
                 CurrentActivePanel = -1;
         }
 
-        protected MetePanel GetPanel(short panel)
+        private MetePanel GetPanel(short panel)
         {
             if (panel != -1)
                 return PanelList[(int)panel];
@@ -92,7 +110,7 @@ namespace Metelab
                 return null;
         }
 
-        protected T GetPanel<T>(short panel) where T : MetePanel
+        private T GetPanel<T>(short panel) where T : MetePanel
         {
             return (T)GetPanel(panel);
         }
