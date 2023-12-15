@@ -4,7 +4,7 @@ namespace Metelab
     public abstract class MeteMono : MonoBehaviour
     {
         [Header(nameof(MeteMono))]
-        public MeteLogData LogData;
+        public MeteLogSO LogData;
 
         public virtual void EarlyInit()
         {

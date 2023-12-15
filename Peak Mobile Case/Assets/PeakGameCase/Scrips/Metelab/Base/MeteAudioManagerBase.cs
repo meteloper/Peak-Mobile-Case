@@ -6,11 +6,11 @@ using System;
 
 namespace Metelab
 {
-    public abstract class AudioManagerBase<K,KEnum>  : MeteSingleton<AudioManagerBase<K, KEnum>>
-        where K : AudioManagerBase<K, KEnum>
+    public abstract class MeteAudioManagerBase<K,KEnum>  : MeteSingleton<MeteAudioManagerBase<K, KEnum>>
+        where K : MeteAudioManagerBase<K, KEnum>
         where KEnum : Enum
     {
-        public AudioManagerData AudioManagerData;
+        public AudioManagerSO AudioManagerData;
 
         [SerializeField] private List<AudioSource> ListDeactiveAudioSource = new();
         [SerializeField] private List<AudioSource> ListActiveAudioSource = new();

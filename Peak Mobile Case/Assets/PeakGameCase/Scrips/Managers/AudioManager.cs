@@ -12,7 +12,7 @@ namespace Metelab.PeakGameCase
     }
 
 
-    public class AudioManager : AudioManagerBase<AudioManager, AudioNames>
+    public class AudioManager : MeteAudioManagerBase<AudioManager, AudioNames>
     {
         public override int ConvertToInt(AudioNames audio)
         {

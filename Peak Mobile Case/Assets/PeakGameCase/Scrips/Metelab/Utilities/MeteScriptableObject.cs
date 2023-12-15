@@ -6,7 +6,7 @@ namespace Metelab
 {
     public abstract class MeteScriptableObject : ScriptableObject
     {
-        public MeteLogData LogData;
+        public MeteLogSO LogData;
 
         public virtual void EarlyInit()
         {

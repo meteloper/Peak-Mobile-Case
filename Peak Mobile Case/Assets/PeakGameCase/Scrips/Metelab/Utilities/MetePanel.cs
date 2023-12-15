@@ -37,7 +37,7 @@ namespace Metelab
             }
         }
         [Header("LudumPanel")]
-        public MetePanelData PanelData;
+        public MetePanelSO PanelData;
         public RectTransform PanelSafeArea;
         private Vector2 PanelBaseAnchorMin;
         private Vector2 PanelBaseAnchorMax;

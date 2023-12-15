@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Metelab.AudioManager_
 {
     [CreateAssetMenu(fileName = "AudioManagerData", menuName = "Metelab/AudioManagerData")]
-    public class AudioManagerData : MeteSingletonScriptableObject<AudioManagerData>
+    public class AudioManagerSO : MeteSingletonScriptableObject<AudioManagerSO>
     {
         [SerializeField] private AudioClipData[] AudioClips;
 
