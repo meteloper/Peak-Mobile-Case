@@ -1,4 +1,5 @@
 using Metelab;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,15 @@ namespace Metelab.PeakGameCase
 {
     public class GridNode : MeteMono, IPointerClickHandler
     {
-        public List<GridItemBase> GridItems;
+        public List<NodeItemBase> Items;
+
+        public int x;
+        public int y;
+        public Action<GridNode> OnClick;
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Metelab.Log(this, name);
+            OnClick?.Invoke(this);
         }
-
-
     }
 }

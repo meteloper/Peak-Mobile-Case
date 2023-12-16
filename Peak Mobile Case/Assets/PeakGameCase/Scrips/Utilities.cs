@@ -7,19 +7,19 @@ namespace Metelab.PeakGameCase
 {
     public class Utilities
     {
-        public static NodeItemType CreateTypeToItemType(NodeItemCreateType createType)
+        public static NodeItemTypes CreateTypeToItemType(NodeItemCreateTypes createType)
         {
-            if(createType == NodeItemCreateType.CUBE_RANDOM)
+            if(createType == NodeItemCreateTypes.CUBE_RANDOM)
             {
-                return (NodeItemType)Random.Range(0, (int)NodeItemType.MAX);
+                return (NodeItemTypes)Random.Range(0, (int)NodeItemTypes.MAX);
             }
-            else if(createType == NodeItemCreateType.EMPTY)
+            else if(createType == NodeItemCreateTypes.EMPTY)
             {
-                return NodeItemType.NONE;
+                return NodeItemTypes.NONE;
             }
             else
             {
-                return (NodeItemType)createType;
+                return (NodeItemTypes)createType;
             }
         }
     }

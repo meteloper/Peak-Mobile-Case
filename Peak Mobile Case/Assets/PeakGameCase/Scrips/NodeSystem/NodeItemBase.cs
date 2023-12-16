@@ -5,8 +5,10 @@ using UnityEngine.EventSystems;
 
 namespace Metelab.PeakGameCase
 {
-    public abstract class GridItemBase : MeteMono
+    public abstract class NodeItemBase : MeteMono
     {
-       
+        public NodeItemTypes ItemType;
+
+        public abstract void SetDebugColor();
     }
 }

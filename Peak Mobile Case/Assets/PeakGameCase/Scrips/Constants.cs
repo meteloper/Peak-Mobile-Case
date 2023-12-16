@@ -5,7 +5,26 @@ using UnityEngine;
 
 namespace Metelab.PeakGameCase
 {
-    public enum NodeItemType:int
+    public enum GameStates
+    {
+        CanMove,
+        MoveAnimatios
+    }
+
+    public enum Directions
+    {
+        UP = 0,
+        UP_RIGHT = 1,
+        RIGHT = 2,
+        DOWN_RIGHT = 3,
+        DOWN = 4,
+        DOWN_LEFT = 5,
+        LEFT = 6,
+        UP_LEFT = 7,
+        MAX = 8
+    }
+
+    public enum NodeItemTypes:int
     {
         NONE = -1,
         CUBE_YELLOW = 0,
@@ -16,7 +35,7 @@ namespace Metelab.PeakGameCase
         MAX = 5
     }
 
-    public enum NodeItemCreateType:int
+    public enum NodeItemCreateTypes:int
     {
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
@@ -30,10 +49,7 @@ namespace Metelab.PeakGameCase
 
     public class Constants : MonoBehaviour
     {
-        /// <summary>
-        /// Left,Right,Bot,Top
-        /// </summary>
-        public static readonly Margin GRID_MARGINS = new Margin(16,16,16,36);
+
     }
 
     public struct Margin
