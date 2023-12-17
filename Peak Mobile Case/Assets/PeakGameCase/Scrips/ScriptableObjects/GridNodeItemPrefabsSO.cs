@@ -10,7 +10,7 @@ namespace Metelab.PeakGameCase
     {
         public NodeItemBase[] GridItems;
 
-        public NodeItemBase GetGridItemPrefab(NodeItemTypes gridItemType)
+        public NodeItemBase GetGridItemPrefab(NodeItemId gridItemType)
         {
             return GridItems[(int)gridItemType];
         }

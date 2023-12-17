@@ -7,8 +7,10 @@ namespace Metelab.PeakGameCase
 {
     public abstract class NodeItemBase : MeteMono
     {
-        public NodeItemTypes ItemType;
+        public NodeItemId ItemId;
+        public NodeItemType ItemType;
 
-        public abstract void SetDebugColor();
+        public abstract void Trigger();
+        public abstract void Explode();
     }
 }

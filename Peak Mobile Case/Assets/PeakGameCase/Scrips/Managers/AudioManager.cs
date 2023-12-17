@@ -7,8 +7,10 @@ namespace Metelab.PeakGameCase
 {
     public enum AudioNames:int
     {
-        Audio1,
-        Audio2
+        CubeExplode,
+        CubeCollect,
+        Balloon,
+        Duck
     }
 
 

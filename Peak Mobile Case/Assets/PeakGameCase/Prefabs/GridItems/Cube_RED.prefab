@@ -51,8 +51,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
-  ItemType: 1
+  ItemId: 1
+  ItemType: 0
   image: {fileID: 7365665002781627320}
+  Prefab_VFX_CubeBlast: {fileID: -1406593282832764975, guid: 03151576a16602247a83986429a46385, type: 3}
 --- !u!1 &8188711075468188235
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +90,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 9.999999}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &344915867057583415

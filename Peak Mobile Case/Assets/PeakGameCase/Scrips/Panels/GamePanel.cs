@@ -26,7 +26,7 @@ namespace Metelab.PeakGameCase
             base.Init();
             CalculateGridSizeAndPosition();
             CreateGrid();
-            currentGameState = GameStates.CanMove;
+            currentGameState = GameStates.CAN_MOVE;
         }
 
 
@@ -57,7 +57,7 @@ namespace Metelab.PeakGameCase
                     //Creating Nodes
                     int index = y * gridSO.width + x;
 
-                    if (gridSO.layers[0].gridItemsCreateType[index] == NodeItemCreateTypes.EMPTY)
+                    if (gridSO.layers[0].gridItemsCreateType[index] == NodeItemCreateId.EMPTY)
                         continue;
 
                     ArrayGridNodes[index] = Instantiate(GridNodePrefab, GridNodesParent);
@@ -73,10 +73,10 @@ namespace Metelab.PeakGameCase
                     //Creating Nodes' Items
                     for (int i = 0; i < gridSO.layers.Length; i++)
                     {
-                        NodeItemTypes itemType = Utilities.CreateTypeToItemType(gridSO.layers[i].gridItemsCreateType[index]);
+                        NodeItemId itemType = Utilities.CreateTypeToItemType(gridSO.layers[i].gridItemsCreateType[index]);
                         Metelab.Log("("+x+","+y+")  "+i+" "+ gridSO.layers[i].gridItemsCreateType[index].ToString()+" "+ itemType);
 
-                        if (itemType == NodeItemTypes.NONE)
+                        if (itemType == NodeItemId.NONE)
                             continue;
 
                         NodeItemBase itemPrefab = GridNodeItemPrefabsSO.Instance.GetGridItemPrefab(itemType);
@@ -90,63 +90,35 @@ namespace Metelab.PeakGameCase
             DynamicGridBorder.CreateBorder();
         }
 
+        #region Events
         private void OnClickGridNode(GridNode clickGridNode)
         {
             Metelab.Log(this, $"{clickGridNode.name} : Neighbour Nodes Count: {GetSideNeighbourNodes(clickGridNode).Length}" );
 
-            if(currentGameState == GameStates.CanMove)
+            if(currentGameState == GameStates.CAN_MOVE)
             {
-                NodeItemTypes triggerItemType = NodeItemTypes.NONE;
-
-                if (IsHaveNodeItem(clickGridNode, NodeItemTypes.CUBE_YELLOW))
+                if (clickGridNode.Items.Count > 0 && clickGridNode.Items[0] != null && clickGridNode.Items[0].ItemType == NodeItemType.CUBE)
                 {
-                    triggerItemType = NodeItemTypes.CUBE_YELLOW;
-                }
-                else if (IsHaveNodeItem(clickGridNode, NodeItemTypes.CUBE_BLUE))
-                {
-                    triggerItemType = NodeItemTypes.CUBE_BLUE;
-                }
-                else if (IsHaveNodeItem(clickGridNode, NodeItemTypes.CUBE_PURPLE))
-                {
-                    triggerItemType = NodeItemTypes.CUBE_PURPLE;
-                }
-                else if (IsHaveNodeItem(clickGridNode, NodeItemTypes.CUBE_GREEN))
-                {
-                    triggerItemType = NodeItemTypes.CUBE_GREEN;
-                }
-                else if (IsHaveNodeItem(clickGridNode, NodeItemTypes.CUBE_RED))
-                {
-                    triggerItemType = NodeItemTypes.CUBE_RED;
-                }
+                    GridNode[] matchNodes = FindMatch(clickGridNode);
 
-
-                if(triggerItemType != NodeItemTypes.NONE)
-                {
-                    Metelab.Log($"Trigger Item : {triggerItemType}");
-
-                    GridNode[] effectedNodes = FindEffectedNodes(clickGridNode, triggerItemType);
-
-
-                    if(effectedNodes.Length > 1)
+                    if(matchNodes.Length > 1)
                     {
-                        for (int i = 0; i < effectedNodes.Length; i++)
-                        {
-                            Destroy(effectedNodes[i].Items[0].gameObject);
-                            effectedNodes[i].Items.Clear();
-                        }
+                        currentGameState = GameStates.MOVE_STARTED;
+                        AudioManager.Instance.PlayOneShot(AudioNames.CubeExplode);
+                        ExplodeMatch(matchNodes);
                     }
                 }
-
-                currentGameState = GameStates.CanMove;
             }
         }
+        #endregion
 
-        private GridNode[] FindEffectedNodes(GridNode node, NodeItemTypes triggerItemType)
+        #region GridOperations
+        private GridNode[] FindMatch(GridNode node)
         {
             List<GridNode> effectedNodes = new List<GridNode>();
             effectedNodes.Add(node);
 
-            List<GridNode> lastFoundNodes = new List<GridNode>(GetSameItemSideNeighbourNodes(node, triggerItemType));
+            List<GridNode> lastFoundNodes = new List<GridNode>(GetSameItemSideNeighbourNodes(node));
             effectedNodes.AddRange(lastFoundNodes);
 
             List<GridNode> currentFoundNodes = new List<GridNode>();
@@ -156,7 +128,7 @@ namespace Metelab.PeakGameCase
             {
                 for (int i = 0; i < lastFoundNodes.Count; i++)
                 {
-                    currentFoundNodes = currentFoundNodes.Union(GetSameItemSideNeighbourNodes(lastFoundNodes[i], triggerItemType)).ToList();
+                    currentFoundNodes = currentFoundNodes.Union(GetSameItemSideNeighbourNodes(lastFoundNodes[i])).ToList();
                 }
 
                 string log = "";
@@ -178,7 +150,11 @@ namespace Metelab.PeakGameCase
             return effectedNodes.ToArray();
         }
 
-        private GridNode[] GetSameItemSideNeighbourNodes(GridNode node,NodeItemTypes itemType)
+
+        /// <summary>
+        /// It gets node which have same itemType from side neighbours
+        /// </summary>
+        private GridNode[] GetSameItemSideNeighbourNodes(GridNode node)
         {
             GridNode[] neighbourNode = GetSideNeighbourNodes(node);
             List<GridNode> sameItemNodes = new List<GridNode>();
@@ -186,29 +162,15 @@ namespace Metelab.PeakGameCase
 
             foreach (GridNode neighbour in neighbourNode)
             {
-
-                if (IsHaveNodeItem(neighbour, itemType))
+                if (neighbour.Items[0] != null && neighbour.Items[0].ItemId == node.Items[0].ItemId)
                     sameItemNodes.Add(neighbour);
             }
 
             return sameItemNodes.ToArray();
         }
 
-
-
-        private bool IsHaveNodeItem(GridNode node, NodeItemTypes itemType)
-        {
-            foreach (var item in node.Items)
-            {
-                if (item.ItemType == itemType)
-                    return true;
-            }
-
-            return false;
-        }
-
         /// <summary>
-        /// It is only get up, right, down and left neighbour
+        /// It gets only up, right, down and left neighbour
         /// </summary>
         private GridNode[] GetSideNeighbourNodes(GridNode node)
         {
@@ -237,7 +199,6 @@ namespace Metelab.PeakGameCase
 
             return neighbourNodes.ToArray();
         }
-
 
         /// <summary>
         /// It can return null
@@ -291,17 +252,33 @@ namespace Metelab.PeakGameCase
             return gridNode;
         }
 
+
         private GridNode[] FindAllEmptyGridNodes()
         {
-            return null;
+            List<GridNode> emptyGridNodes = new List<GridNode>();
+
+            for (int i = 0; i < ArrayGridNodes.Length; i++)
+            {
+                if(ArrayGridNodes[i] != null && ArrayGridNodes[i].Items.Count == 0)
+                {
+                    emptyGridNodes.Add(ArrayGridNodes[i]);
+                }
+            }
+
+            return emptyGridNodes.ToArray();
         }
 
-        private IEnumerator BlustAnimations(GridNode target, GridNode[] others)
+        private void ExplodeMatch(GridNode[] nodes)
         {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                nodes[i].Items[0].Explode();
+                nodes[i].Items[0] = null;
+            }
 
-        
-
-           yield return StartCoroutine(FillAnimations());
+            currentGameState = GameStates.CAN_MOVE;
+            //yield return null;
+            //yield return StartCoroutine(FillAnimations());
         }
 
         private IEnumerator FillAnimations()
@@ -317,6 +294,8 @@ namespace Metelab.PeakGameCase
 
             yield return null;
         }
+
+        #endregion
     }
 
 

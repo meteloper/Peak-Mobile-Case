@@ -7,8 +7,8 @@ namespace Metelab.PeakGameCase
 {
     public enum GameStates
     {
-        CanMove,
-        MoveAnimatios
+        CAN_MOVE,
+        MOVE_STARTED
     }
 
     public enum Directions
@@ -24,7 +24,15 @@ namespace Metelab.PeakGameCase
         MAX = 8
     }
 
-    public enum NodeItemTypes:int
+    public enum NodeItemType
+    {
+        CUBE,
+        ROCKET,
+        BALLOON,
+        DUCK
+    }
+
+    public enum NodeItemId:int
     {
         NONE = -1,
         CUBE_YELLOW = 0,
@@ -32,19 +40,29 @@ namespace Metelab.PeakGameCase
         CUBE_BLUE = 2,
         CUBE_GREEN = 3,
         CUBE_PURPLE = 4,
-        MAX = 5
+        ROCKET_HORIZONTAL = 5,
+        ROCKET_VERTICAL = 6,
+        BALLOON = 7,
+        DUCK = 8,
+
+        MAX = 9
     }
 
-    public enum NodeItemCreateTypes:int
+    public enum NodeItemCreateId:int
     {
+        EMPTY = -1,
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
         CUBE_BLUE = 2,
         CUBE_GREEN = 3,
         CUBE_PURPLE = 4,
         CUBE_RANDOM = 5,
-        EMPTY = 6,
-        MAX = 7
+        ROCKET_HORIZONTAL = 6,
+        ROCKET_VERTICAL = 7,
+        ROCKET_RANDOM = 8,
+        BALLOON = 9,
+        DUCK = 10,
+        RANDOM = 11
     }
 
     public class Constants : MonoBehaviour

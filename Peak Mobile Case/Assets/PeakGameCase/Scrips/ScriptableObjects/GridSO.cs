@@ -36,15 +36,15 @@ namespace Metelab.PeakGameCase
        
         public void LoadFromString()
         {
-            Dictionary<Color32,NodeItemCreateTypes> createTypeToColor = new Dictionary<Color32,NodeItemCreateTypes>
+            Dictionary<Color32,NodeItemCreateId> createTypeToColor = new Dictionary<Color32,NodeItemCreateId>
             {
-                { new Color32(251,242,54,255) ,NodeItemCreateTypes.CUBE_YELLOW },
-                { new Color32(99,155,255,255),NodeItemCreateTypes.CUBE_BLUE },
-                { new Color32(153,229,80,255),NodeItemCreateTypes.CUBE_GREEN },
-                { new Color32(172,50,50,255),NodeItemCreateTypes.CUBE_RED },
-                { new Color32(118,66,138,255),NodeItemCreateTypes.CUBE_PURPLE },
-                { new Color32(138,111,48,255),NodeItemCreateTypes.CUBE_RANDOM },
-                { new Color32(255,255,255,255),NodeItemCreateTypes.EMPTY },
+                { new Color32(251,242,54,255) ,NodeItemCreateId.CUBE_YELLOW },
+                { new Color32(99,155,255,255),NodeItemCreateId.CUBE_BLUE },
+                { new Color32(153,229,80,255),NodeItemCreateId.CUBE_GREEN },
+                { new Color32(172,50,50,255),NodeItemCreateId.CUBE_RED },
+                { new Color32(118,66,138,255),NodeItemCreateId.CUBE_PURPLE },
+                { new Color32(138,111,48,255),NodeItemCreateId.CUBE_RANDOM },
+                { new Color32(255,255,255,255),NodeItemCreateId.EMPTY },
             };
 
             height = gridTextures[0].height;
@@ -55,7 +55,7 @@ namespace Metelab.PeakGameCase
 
             for (int L = 0; L < gridTextures.Length; L++)
             {
-                layers[L].gridItemsCreateType = new NodeItemCreateTypes[width*height];
+                layers[L].gridItemsCreateType = new NodeItemCreateId[width*height];
 
                 for (int y = 0; y < height; y++)
                 {
@@ -76,13 +76,13 @@ namespace Metelab.PeakGameCase
     [Serializable]
     public struct GridLayer
     {
-        public NodeItemCreateTypes[] gridItemsCreateType;
+        public NodeItemCreateId[] gridItemsCreateType;
     }
 
     [Serializable]
     public struct GridGoal
     {
-        public NodeItemTypes nodeItemType;
+        public NodeItemId nodeItemType;
         public int count;
     }
 }

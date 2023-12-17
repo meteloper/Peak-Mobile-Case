@@ -24,14 +24,12 @@ namespace Metelab
             {
                 instance = MonoBehaviour.Instantiate(prefab, startPos, quaternion, parent);
                 poolList.Add(instance);
-                Metelab.Log($"New text created!", Color.green);
             }
             else
             {
                 instance.transform.position = startPos;
                 instance.transform.rotation = quaternion;
                 instance.transform.parent = parent;
-                Metelab.Log($"Old text was used", Color.blue);
             }
 
             instance.gameObject.SetActive(true);

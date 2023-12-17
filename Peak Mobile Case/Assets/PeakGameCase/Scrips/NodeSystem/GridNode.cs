@@ -11,6 +11,7 @@ namespace Metelab.PeakGameCase
     {
         public List<NodeItemBase> Items;
 
+
         public int x;
         public int y;
         public Action<GridNode> OnClick;
