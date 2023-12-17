@@ -13,7 +13,7 @@ namespace Metelab.PeakGameCase
             {
                 return (NodeItemId)Random.Range(0, (int)NodeItemId.MAX);
             }
-            else if(createType == NodeItemCreateId.EMPTY)
+            else if(createType == NodeItemCreateId.SPACE)
             {
                 return NodeItemId.NONE;
             }

@@ -11,6 +11,14 @@ namespace Metelab.PeakGameCase
     {
         public List<NodeItemBase> Items;
 
+        public bool IsHaveItemInFirstLayer
+        {
+            get
+            {
+                return Items!= null && Items.Count > 0 && Items[0] != null; 
+            }
+        }
+
 
         public int x;
         public int y;

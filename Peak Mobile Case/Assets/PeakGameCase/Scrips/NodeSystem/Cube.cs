@@ -15,7 +15,9 @@ namespace Metelab.PeakGameCase
 
         public override void Trigger()
         {
-          
+            Color color = image.color;
+            color.a = 0.5f;
+            image.color = color;
         }
 
         public override void Explode()

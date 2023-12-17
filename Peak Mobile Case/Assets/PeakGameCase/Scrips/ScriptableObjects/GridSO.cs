@@ -44,7 +44,7 @@ namespace Metelab.PeakGameCase
                 { new Color32(172,50,50,255),NodeItemCreateId.CUBE_RED },
                 { new Color32(118,66,138,255),NodeItemCreateId.CUBE_PURPLE },
                 { new Color32(138,111,48,255),NodeItemCreateId.CUBE_RANDOM },
-                { new Color32(255,255,255,255),NodeItemCreateId.EMPTY },
+                { new Color32(255,255,255,255),NodeItemCreateId.SPACE },
             };
 
             height = gridTextures[0].height;

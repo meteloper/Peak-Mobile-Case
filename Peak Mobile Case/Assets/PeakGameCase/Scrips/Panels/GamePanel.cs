@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace Metelab.PeakGameCase
                     //Creating Nodes
                     int index = y * gridSO.width + x;
 
-                    if (gridSO.layers[0].gridItemsCreateType[index] == NodeItemCreateId.EMPTY)
+                    if (gridSO.layers[0].gridItemsCreateType[index] == NodeItemCreateId.SPACE)
                         continue;
 
                     ArrayGridNodes[index] = Instantiate(GridNodePrefab, GridNodesParent);
@@ -93,7 +94,7 @@ namespace Metelab.PeakGameCase
         #region Events
         private void OnClickGridNode(GridNode clickGridNode)
         {
-            Metelab.Log(this, $"{clickGridNode.name} : Neighbour Nodes Count: {GetSideNeighbourNodes(clickGridNode).Length}" );
+            Metelab.Log(this, $"{clickGridNode.name} : Neighbour Nodes Count: {GetNodeNeighbours(clickGridNode).Length}" );
 
             if(currentGameState == GameStates.CAN_MOVE)
             {
@@ -104,8 +105,8 @@ namespace Metelab.PeakGameCase
                     if(matchNodes.Length > 1)
                     {
                         currentGameState = GameStates.MOVE_STARTED;
-                        AudioManager.Instance.PlayOneShot(AudioNames.CubeExplode);
-                        ExplodeMatch(matchNodes);
+                       
+                        StartCoroutine(IExplodeMatch(matchNodes));
                     }
                 }
             }
@@ -136,15 +137,13 @@ namespace Metelab.PeakGameCase
                 {
                     log += $"{item.name}, ";
                 }
-                Metelab.Log(log,Color.red);
+                Metelab.Log(log,Color.yellow);
 
                 currentFoundNodes = currentFoundNodes.Except(effectedNodes).ToList();
                 effectedNodes.AddRange(currentFoundNodes);
                 lastFoundNodes = new List<GridNode>(currentFoundNodes);
                 
                 currentFoundNodes.Clear();
-
-
             }
 
             return effectedNodes.ToArray();
@@ -156,7 +155,7 @@ namespace Metelab.PeakGameCase
         /// </summary>
         private GridNode[] GetSameItemSideNeighbourNodes(GridNode node)
         {
-            GridNode[] neighbourNode = GetSideNeighbourNodes(node);
+            GridNode[] neighbourNode = GetNodeNeighbours(node);
             List<GridNode> sameItemNodes = new List<GridNode>();
 
 
@@ -172,7 +171,7 @@ namespace Metelab.PeakGameCase
         /// <summary>
         /// It gets only up, right, down and left neighbour
         /// </summary>
-        private GridNode[] GetSideNeighbourNodes(GridNode node)
+        private GridNode[] GetNodeNeighbours(GridNode node)
         {
             List<GridNode> neighbourNodes = new List<GridNode>();
 
@@ -198,6 +197,18 @@ namespace Metelab.PeakGameCase
                 neighbourNodes.Add(gridNode);
 
             return neighbourNodes.ToArray();
+        }
+
+        private GridNode[] GetNodesNeighbours(GridNode[] nodes)
+        {
+            List<GridNode> neighbourNodes = new List<GridNode>();
+
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                neighbourNodes = neighbourNodes.Union(GetNodeNeighbours(nodes[i])).ToList();
+            }
+
+            return neighbourNodes.Except(nodes).ToArray();
         }
 
         /// <summary>
@@ -259,7 +270,7 @@ namespace Metelab.PeakGameCase
 
             for (int i = 0; i < ArrayGridNodes.Length; i++)
             {
-                if(ArrayGridNodes[i] != null && ArrayGridNodes[i].Items.Count == 0)
+                if(ArrayGridNodes[i] != null && !ArrayGridNodes[i].IsHaveItemInFirstLayer)
                 {
                     emptyGridNodes.Add(ArrayGridNodes[i]);
                 }
@@ -268,7 +279,7 @@ namespace Metelab.PeakGameCase
             return emptyGridNodes.ToArray();
         }
 
-        private void ExplodeMatch(GridNode[] nodes)
+        private IEnumerator IExplodeMatch(GridNode[] nodes)
         {
             for (int i = 0; i < nodes.Length; i++)
             {
@@ -276,16 +287,112 @@ namespace Metelab.PeakGameCase
                 nodes[i].Items[0] = null;
             }
 
-            currentGameState = GameStates.CAN_MOVE;
-            //yield return null;
-            //yield return StartCoroutine(FillAnimations());
+            AudioManager.Instance.PlayOneShot(AudioNames.CubeExplode);
+
+            GridNode[] toTriggerNodes = GetNodesNeighbours(nodes);
+
+            for (int i = 0; i < toTriggerNodes.Length; i++)
+            {
+                
+                    for (int j = 0; j < toTriggerNodes[i].Items.Count; j++)
+                    {
+                        if (toTriggerNodes[i].Items[j] != null)
+                            toTriggerNodes[i].Items[j].Trigger();
+                    }
+                
+            }
+
+            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(IFillGrid());
         }
 
-        private IEnumerator FillAnimations()
+        private IEnumerator IFillGrid()
         {
 
+            GridNode[] emptyNodes = FindAllEmptyGridNodes();
 
-            yield return StartCoroutine(FallAnimations(FindAllEmptyGridNodes()));
+            if(emptyNodes != null)
+            {
+                List<int> toFillColumns = new List<int>();
+
+                for (int i = 0; i < emptyNodes.Length; i++)
+                {
+                    if (!toFillColumns.Contains(emptyNodes[i].x))
+                        toFillColumns.Add(emptyNodes[i].x);
+                }
+
+                List<YieldInstruction> fillAnimastions = new List<YieldInstruction>();
+
+                foreach (var column in toFillColumns)
+                {
+                    fillAnimastions.AddRange(FillColumn(column));
+                }
+
+                foreach (var anim in fillAnimastions)
+                {
+                    yield return anim;
+                }
+            }
+
+            currentGameState = GameStates.CAN_MOVE;
+        }
+
+        private YieldInstruction[] FillColumn(int column)
+        {
+            GridNode current = null;
+            GridNode firstEmptyPlace = null;
+            List<YieldInstruction> animations = new List<YieldInstruction> ();
+
+            for (int y = 1; y < gridSO.height; y++)
+            {
+                current = ArrayGridNodes[column + (y * gridSO.width)];
+
+                if (current == null || !current.IsHaveItemInFirstLayer) // for pass space or empty nodes
+                    continue;
+
+                firstEmptyPlace = FindFirstEmptyNodeFromBot(current);
+
+                if(firstEmptyPlace != null)
+                {
+                    TransferFirstLayerItem(current, firstEmptyPlace);
+
+                    animations.Add(firstEmptyPlace.Items[0].RectTransform.
+                        DOAnchorPosY(firstEmptyPlace.RectTransform.anchoredPosition.y, Constants.FILL_ANIM_TIME_SEC).
+                        SetEase( Ease.InQuad).
+                        WaitForCompletion());
+                }
+            }
+
+            return animations.ToArray();
+        }
+
+        //
+        private GridNode FindFirstEmptyNodeFromBot(GridNode node)
+        {
+            GridNode current = null;
+            for (int y = 0; y < node.y; y++)
+            {
+                current = ArrayGridNodes[node.x + (y * gridSO.width)];
+
+                if (current != null && !current.IsHaveItemInFirstLayer)
+                    return current;
+            }
+
+            return null;
+        }
+
+        private void TransferFirstLayerItem(GridNode from, GridNode to)
+        {
+            if (to.Items != null)
+            {
+                to.Items = new List<NodeItemBase>() { from.Items[0] };
+                from.Items[0] = null;
+            }
+            else if (to.Items.Count == 0)
+            {
+                to.Items.Add(from.Items[0]);
+                from.Items[0] = null;
+            }
         }
 
         private IEnumerator FallAnimations(GridNode[] gridNodesToFill)

@@ -50,7 +50,7 @@ namespace Metelab.PeakGameCase
 
     public enum NodeItemCreateId:int
     {
-        EMPTY = -1,
+        SPACE = -1,
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
         CUBE_BLUE = 2,
@@ -67,7 +67,7 @@ namespace Metelab.PeakGameCase
 
     public class Constants : MonoBehaviour
     {
-
+        public const float FILL_ANIM_TIME_SEC = 0.2f;
     }
 
     public struct Margin
