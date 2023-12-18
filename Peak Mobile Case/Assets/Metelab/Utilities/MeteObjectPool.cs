@@ -37,6 +37,30 @@ namespace Metelab
             return instance;
         }
 
+        public T Instantiate(T prefab, Transform parent)
+        {
+            int prefabInstanceID = prefab.GetInstanceID();
+            if (!dicPools.ContainsKey(prefabInstanceID))
+            {
+                dicPools.Add(prefabInstanceID, new List<T>());
+            }
+
+            List<T> poolList = dicPools[prefabInstanceID];
+            T instance = poolList.Find((item) => !item.gameObject.activeSelf);
+
+            if (instance == null)
+            {
+                instance = MonoBehaviour.Instantiate(prefab,parent);
+                poolList.Add(instance);
+            }
+            else
+                instance.transform.SetParent(parent);
+
+            instance.gameObject.SetActive(true);
+
+            return instance;
+        }
+
 
     }
 

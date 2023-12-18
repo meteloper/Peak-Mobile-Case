@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,14 @@ namespace Metelab.PeakGameCase
 {
     public abstract class NodeItemBase : MeteMono
     {
+        public GridNode Node { get; set; }
 
-        public NodeItemId ItemId;
-        public NodeItemType ItemType;
+        public ExplodeConditions ExplodeCondition;
+        public NodeItemIds ItemId;
+        public NodeItemTypes ItemType;
 
-        public abstract void Trigger();
-        public abstract void Explode();
+        public Action<NodeItemBase> OnTriggered;
+        public abstract void Explode(ExplodeConditions triggerType);
+
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Metelab.PeakGameCase
 {
-    public class VFXCubeBlast : MonoBehaviour
+    public class ParticleController : MonoBehaviour
     {
         public new ParticleSystem particleSystem;
         public float LifeTime;

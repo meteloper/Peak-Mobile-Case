@@ -7,8 +7,8 @@ namespace Metelab.PeakGameCase
 {
     public enum MainItemStates
     {
-        FALL,
         GROUND,
+        FALL,
         FILL,
     }
 
@@ -37,7 +37,7 @@ namespace Metelab.PeakGameCase
         MAX = 8
     }
 
-    public enum NodeItemType
+    public enum NodeItemTypes
     {
         CUBE,
         ROCKET,
@@ -45,7 +45,14 @@ namespace Metelab.PeakGameCase
         DUCK
     }
 
-    public enum NodeItemId:int
+    public enum ExplodeConditions
+    {
+        EXPLODE,
+        EXPLODE_SIDE,
+        BOTTOM_ROW
+    }
+
+    public enum NodeItemIds:int
     {
         NONE = -1,
         CUBE_YELLOW = 0,
@@ -53,33 +60,35 @@ namespace Metelab.PeakGameCase
         CUBE_BLUE = 2,
         CUBE_GREEN = 3,
         CUBE_PURPLE = 4,
-        CUBE_MAX = 5,
-
-        ROCKET_HORIZONTAL = 6,
-        ROCKET_VERTICAL = 7,
-        BALLOON = 8,
-        DUCK = 9
+        ROCKET_HORIZONTAL = 5,
+        ROCKET_VERTICAL = 6,
+        BALLOON = 7,
+        DUCK = 8,
+        MAX = 9
     }
 
     public enum NodeItemCreateId:int
     {
+        ROCKET_RANDOM = -4,
+        CUBE_RANDOM = -3,
+        RANDOM = -2,
         SPACE = -1,
+
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
         CUBE_BLUE = 2,
         CUBE_GREEN = 3,
         CUBE_PURPLE = 4,
-        CUBE_RANDOM = 5,
-        ROCKET_HORIZONTAL = 6,
-        ROCKET_VERTICAL = 7,
-        ROCKET_RANDOM = 8,
-        BALLOON = 9,
-        DUCK = 10,
-        RANDOM = 11
+        ROCKET_HORIZONTAL = 5,
+        ROCKET_VERTICAL = 6,
+        BALLOON = 7,
+        DUCK = 8,
+        MAX = 9
     }
 
     public class Constants : MonoBehaviour
     {
+        public const int CUBE_COUNT = 5;
         public const float FALL_ACCELERATION = 3000;
         public const float FILL_SPEED = 1250;
     }

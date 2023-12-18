@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -7,19 +5,23 @@ namespace Metelab.PeakGameCase
 {
     public class Utilities
     {
-        public static NodeItemId CreateTypeToItemType(NodeItemCreateId createType)
+        public static NodeItemIds CreateTypeToItemType(NodeItemCreateId createType)
         {
             if(createType == NodeItemCreateId.CUBE_RANDOM)
             {
-                return (NodeItemId)Random.Range((int)NodeItemId.CUBE_YELLOW, (int)NodeItemId.CUBE_MAX);
+                return (NodeItemIds)Random.Range((int)NodeItemIds.CUBE_YELLOW, Constants.CUBE_COUNT);
             }
-            else if(createType == NodeItemCreateId.SPACE)
+            else if(createType == NodeItemCreateId.ROCKET_RANDOM)
             {
-                return NodeItemId.NONE;
+                return Random.Range(0,2) == 0 ? NodeItemIds.ROCKET_HORIZONTAL : NodeItemIds.ROCKET_VERTICAL;
+            }
+            else if(createType == NodeItemCreateId.RANDOM)
+            {
+                return (NodeItemIds)Random.Range(0, (int)NodeItemIds.MAX);
             }
             else
             {
-                return (NodeItemId)createType;
+                return (NodeItemIds)createType;
             }
         }
     }

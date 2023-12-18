@@ -18,16 +18,16 @@ namespace Metelab.PeakGameCase
         {
             get
             {
-                return MainItem != null && MainItem.State == MainItemStates.GROUND;
+                return DynamicItem != null && DynamicItem.State == MainItemStates.GROUND;
             }
         }
 
 
-        public NodeMainItem MainItem
+        public NodeDynamicItem DynamicItem
         {
             get
             {
-                return (NodeMainItem)Items[0];
+                return (NodeDynamicItem)Items[0];
             }
             set
             {
@@ -40,11 +40,11 @@ namespace Metelab.PeakGameCase
                     Items[0] = value;
                 }
 
-                value.Ground = RectTransform;
+                value.Node = this;
             }
         }
 
-        public bool IsHaveItemInFirstLayer
+        public bool IsHaveDynamicItem
         {
             get
             {
@@ -52,9 +52,9 @@ namespace Metelab.PeakGameCase
             }
         }
 
-        public NodeMainItem TakeMainItem()
+        public NodeDynamicItem TakeDynamicItem()
         {
-            NodeMainItem mainItem = (NodeMainItem)Items[0];
+            NodeDynamicItem mainItem = (NodeDynamicItem)Items[0];
             Items[0] = null;
             return mainItem;
         }

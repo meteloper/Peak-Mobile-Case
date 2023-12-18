@@ -85,10 +85,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7541028724712656222}
-  - component: {fileID: 4939414921369861747}
+  - component: {fileID: 4809773389390574761}
   - component: {fileID: 3839808073155159397}
   m_Layer: 5
-  m_Name: Cube_BLUE
+  m_Name: '[2] Cube_BLUE'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,10 +112,10 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -50, y: -50}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &4939414921369861747
+--- !u!114 &4809773389390574761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,17 +124,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5703885175096704005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630344f89d434134cb1d2bbbe028e983, type: 3}
+  m_Script: {fileID: 11500000, guid: b297dfb5229ba204a89e907a3231f0cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
+  TriggerType: 0
   ItemId: 2
   ItemType: 0
-  Ground: {fileID: 0}
   State: 0
-  animCollision: {fileID: 3839808073155159397}
-  image: {fileID: 5984843238180265367}
-  Prefab_VFX_CubeBlast: {fileID: 4961063849502732791, guid: 46389fb1a3842734baf43860105c0ee2, type: 3}
+  PrefabExplodeEffect: {fileID: -723966796969421786, guid: 0048369c5102c2842a5b254350f9eede, type: 3}
 --- !u!111 &3839808073155159397
 Animation:
   m_ObjectHideFlags: 0
