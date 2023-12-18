@@ -5,6 +5,19 @@ using UnityEngine;
 
 namespace Metelab.PeakGameCase
 {
+    public enum MainItemStates
+    {
+        FALL,
+        GROUND,
+        FILL,
+    }
+
+    public enum ConstraintType
+    {
+        TIME,
+        ACCELERATION
+    }
+
     public enum GameStates
     {
         CAN_MOVE,
@@ -40,12 +53,12 @@ namespace Metelab.PeakGameCase
         CUBE_BLUE = 2,
         CUBE_GREEN = 3,
         CUBE_PURPLE = 4,
-        ROCKET_HORIZONTAL = 5,
-        ROCKET_VERTICAL = 6,
-        BALLOON = 7,
-        DUCK = 8,
+        CUBE_MAX = 5,
 
-        MAX = 9
+        ROCKET_HORIZONTAL = 6,
+        ROCKET_VERTICAL = 7,
+        BALLOON = 8,
+        DUCK = 9
     }
 
     public enum NodeItemCreateId:int
@@ -67,7 +80,8 @@ namespace Metelab.PeakGameCase
 
     public class Constants : MonoBehaviour
     {
-        public const float FILL_ANIM_TIME_SEC = 0.2f;
+        public const float FALL_ACCELERATION = 2000;
+        public const float FILL_SPEED = 1000;
     }
 
     public struct Margin

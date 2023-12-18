@@ -1,9 +1,12 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Unity.VisualScripting;
+using System.Threading.Tasks.Sources;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Metelab.PeakGameCase
 {
@@ -11,6 +14,7 @@ namespace Metelab.PeakGameCase
     {
         [Header("GamePanel")]
         public GridSO gridSO;
+        public RectTransform FallStartPoint;
         public RectTransform GridNodesParent;
         public RectTransform GridNodesItemParent;
         public GridNode GridNodePrefab;
@@ -19,8 +23,6 @@ namespace Metelab.PeakGameCase
         [Header("For Debug")]
         [SerializeField] private GridNode[] ArrayGridNodes;
         [SerializeField] private GameStates currentGameState;
-        private int width;
-        private int height;
 
         public override void Init()
         {
@@ -29,7 +31,7 @@ namespace Metelab.PeakGameCase
             CreateGrid();
             currentGameState = GameStates.CAN_MOVE;
         }
-
+       
 
         private void CalculateGridSizeAndPosition()
         {
@@ -44,6 +46,8 @@ namespace Metelab.PeakGameCase
             DynamicGridBorder.bordersParent.sizeDelta = GridNodesParent.sizeDelta;
             DynamicGridBorder.bordersParent.anchoredPosition = Vector2.zero;
             DynamicGridBorder.SetGridSize(gridSO.width, gridSO.height);
+
+            FallStartPoint.sizeDelta = GridNodesParent.sizeDelta;
         }
 
         public void CreateGrid()
@@ -82,7 +86,16 @@ namespace Metelab.PeakGameCase
 
                         NodeItemBase itemPrefab = GridNodeItemPrefabsSO.Instance.GetGridItemPrefab(itemType);
                         NodeItemBase gridItem = Instantiate(itemPrefab, GridNodesItemParent);
-                        ArrayGridNodes[index].Items.Add(gridItem);
+
+                        if (i == 0)
+                        {
+                            ArrayGridNodes[index].MainItem = (NodeMainItem)gridItem;
+                            ArrayGridNodes[index].MainItem.State = MainItemStates.GROUND;
+                        }
+                        else
+                            ArrayGridNodes[index].Items.Add(gridItem);
+
+
                         gridItem.RectTransform.anchoredPosition = ArrayGridNodes[index].RectTransform.anchoredPosition;
                     }
                 }
@@ -96,21 +109,130 @@ namespace Metelab.PeakGameCase
         {
             Metelab.Log(this, $"{clickGridNode.name} : Neighbour Nodes Count: {GetNodeNeighbours(clickGridNode).Length}" );
 
-            if(currentGameState == GameStates.CAN_MOVE)
+            if (clickGridNode.Items.Count > 0 && clickGridNode.Items[0] != null && clickGridNode.Items[0].ItemType == NodeItemType.CUBE)
             {
-                if (clickGridNode.Items.Count > 0 && clickGridNode.Items[0] != null && clickGridNode.Items[0].ItemType == NodeItemType.CUBE)
-                {
-                    GridNode[] matchNodes = FindMatch(clickGridNode);
+                GridNode[] matchNodes = FindMatch(clickGridNode);
 
-                    if(matchNodes.Length > 1)
-                    {
-                        currentGameState = GameStates.MOVE_STARTED;
-                       
-                        StartCoroutine(IExplodeMatch(matchNodes));
-                    }
+                if(matchNodes.Length > 1)
+                {
+                    StartCoroutine(IExplodeMatch(matchNodes));
                 }
             }
         }
+        #endregion
+
+        #region States
+        private IEnumerator IExplodeMatch(GridNode[] nodes)
+        {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                nodes[i].Items[0].Explode();
+                nodes[i].Items[0] = null;
+            }
+
+            AudioManager.Instance.PlayOneShot(AudioNames.CubeExplode);
+
+            GridNode[] toTriggerNodes = GetNodesNeighbours(nodes);
+
+            for (int i = 0; i < toTriggerNodes.Length; i++)
+            {
+
+                for (int j = 0; j < toTriggerNodes[i].Items.Count; j++)
+                {
+                    if (toTriggerNodes[i].Items[j] != null)
+                        toTriggerNodes[i].Items[j].Trigger();
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f);
+             StartCoroutine(IFillGrid());
+        }
+
+        private IEnumerator IFillGrid()
+        {
+            GridNode[] emptyNodes = FindAllEmptyGridNodes();
+
+            if (emptyNodes != null)
+            {
+                List<int> toFillColumns = new List<int>();
+
+                for (int i = 0; i < emptyNodes.Length; i++)
+                {
+                    if (!toFillColumns.Contains(emptyNodes[i].x))
+                        toFillColumns.Add(emptyNodes[i].x);
+                }
+
+                foreach (var column in toFillColumns)
+                {
+                    FillColumn(column);
+                }
+
+                StartCoroutine(IFallGrid(toFillColumns.ToArray()));
+
+                yield return null;
+            }
+        }
+
+        private void FillColumn(int column)
+        {
+            for (int y = 1; y < gridSO.height; y++)
+            {
+                GridNode currentNode = ArrayGridNodes[column + (y * gridSO.width)];
+
+                if (currentNode == null || !currentNode.IsHaveItemInFirstLayer) // for pass space or empty nodes
+                    continue;
+
+                GridNode firstEmptyNode = FindFirstEmptyNodeFromBot(currentNode);
+
+                if (firstEmptyNode != null)
+                {
+                    NodeMainItem mainItem = currentNode.TakeMainItem();
+                    mainItem.State = MainItemStates.FILL;
+                    firstEmptyNode.MainItem = mainItem;
+                }
+            }
+        }
+
+        private IEnumerator IFallGrid(int[] colomns)
+        {
+            GridNode[] emptyNodes = FindAllEmptyGridNodes();
+
+            if (emptyNodes != null)
+            {
+
+                for (int i = 0; i < colomns.Length; i++)
+                {
+                    FallColumn(colomns[i]);
+                }
+            }
+
+            yield return null;
+        }
+
+  
+        private void FallColumn(int column)
+        {
+            float totalHeight = 0;
+
+            for (int y = 0; y < gridSO.height; y++)
+            {
+                GridNode emptyNode = ArrayGridNodes[column + y * gridSO.width];
+
+                if (!emptyNode.IsHaveItemInFirstLayer)
+                {
+                    //Creating New Cube
+                    NodeItemId itemId = Utilities.CreateTypeToItemType(NodeItemCreateId.CUBE_RANDOM);
+                    NodeItemBase itemPrefab = GridNodeItemPrefabsSO.Instance.GetGridItemPrefab(itemId);
+                    NodeMainItem newItem = (NodeMainItem)Instantiate(itemPrefab, FallStartPoint);
+                    totalHeight += newItem.RectTransform.sizeDelta.y + 20;
+                    newItem.RectTransform.anchoredPosition = new Vector2(emptyNode.RectTransform.anchoredPosition.x, totalHeight);
+                    newItem.RectTransform.parent = GridNodesItemParent;
+                    newItem.State = MainItemStates.FALL;
+                    emptyNode.MainItem = newItem;
+                }
+            }
+        }
+
         #endregion
 
         #region GridOperations
@@ -132,12 +254,12 @@ namespace Metelab.PeakGameCase
                     currentFoundNodes = currentFoundNodes.Union(GetSameItemSideNeighbourNodes(lastFoundNodes[i])).ToList();
                 }
 
-                string log = "";
-                foreach (var item in currentFoundNodes)
-                {
-                    log += $"{item.name}, ";
-                }
-                Metelab.Log(log,Color.yellow);
+                //string log = "";
+                //foreach (var item in currentFoundNodes)
+                //{
+                //    log += $"{item.name}, ";
+                //}
+                //Metelab.Log(log,Color.yellow);
 
                 currentFoundNodes = currentFoundNodes.Except(effectedNodes).ToList();
                 effectedNodes.AddRange(currentFoundNodes);
@@ -161,7 +283,7 @@ namespace Metelab.PeakGameCase
 
             foreach (GridNode neighbour in neighbourNode)
             {
-                if (neighbour.Items[0] != null && neighbour.Items[0].ItemId == node.Items[0].ItemId)
+                if (neighbour.IsActive && neighbour.MainItem.ItemId == node.MainItem.ItemId)
                     sameItemNodes.Add(neighbour);
             }
 
@@ -279,94 +401,30 @@ namespace Metelab.PeakGameCase
             return emptyGridNodes.ToArray();
         }
 
-        private IEnumerator IExplodeMatch(GridNode[] nodes)
+        
+
+        private YieldInstruction MoveMainItemToNodeWithAcceleration(RectTransform moveItem,RectTransform target, Ease ease, float acceleration, Action OnCompleted = null)
         {
-            for (int i = 0; i < nodes.Length; i++)
-            {
-                nodes[i].Items[0].Explode();
-                nodes[i].Items[0] = null;
-            }
+            float targetY = target.anchoredPosition.y;
+            float currentY = moveItem.anchoredPosition.y;
+            float totalTime = Mathf.Pow(2 * Math.Abs(currentY - targetY) / acceleration, 0.5f); // t =  ((2*d)/a)^(1/2)
 
-            AudioManager.Instance.PlayOneShot(AudioNames.CubeExplode);
-
-            GridNode[] toTriggerNodes = GetNodesNeighbours(nodes);
-
-            for (int i = 0; i < toTriggerNodes.Length; i++)
-            {
-                
-                    for (int j = 0; j < toTriggerNodes[i].Items.Count; j++)
-                    {
-                        if (toTriggerNodes[i].Items[j] != null)
-                            toTriggerNodes[i].Items[j].Trigger();
-                    }
-                
-            }
-
-            yield return new WaitForSeconds(0.1f);
-            StartCoroutine(IFillGrid());
+            return moveItem.
+              DOAnchorPosY(targetY, totalTime).
+              SetEase(ease).
+              OnComplete(() => { OnCompleted?.Invoke(); }).
+              WaitForCompletion();
         }
 
-        private IEnumerator IFillGrid()
+        private YieldInstruction MoveMainItemToNodeWithTime(RectTransform moveItem, RectTransform target, Ease ease, float time, Action OnCompleted = null)
         {
-
-            GridNode[] emptyNodes = FindAllEmptyGridNodes();
-
-            if(emptyNodes != null)
-            {
-                List<int> toFillColumns = new List<int>();
-
-                for (int i = 0; i < emptyNodes.Length; i++)
-                {
-                    if (!toFillColumns.Contains(emptyNodes[i].x))
-                        toFillColumns.Add(emptyNodes[i].x);
-                }
-
-                List<YieldInstruction> fillAnimastions = new List<YieldInstruction>();
-
-                foreach (var column in toFillColumns)
-                {
-                    fillAnimastions.AddRange(FillColumn(column));
-                }
-
-                foreach (var anim in fillAnimastions)
-                {
-                    yield return anim;
-                }
-            }
-
-            currentGameState = GameStates.CAN_MOVE;
+            return moveItem.
+              DOAnchorPosY(target.anchoredPosition.y, time).
+              SetEase(ease).
+              OnComplete(() => { OnCompleted?.Invoke(); }).
+              WaitForCompletion();
         }
 
-        private YieldInstruction[] FillColumn(int column)
-        {
-            GridNode current = null;
-            GridNode firstEmptyPlace = null;
-            List<YieldInstruction> animations = new List<YieldInstruction> ();
-
-            for (int y = 1; y < gridSO.height; y++)
-            {
-                current = ArrayGridNodes[column + (y * gridSO.width)];
-
-                if (current == null || !current.IsHaveItemInFirstLayer) // for pass space or empty nodes
-                    continue;
-
-                firstEmptyPlace = FindFirstEmptyNodeFromBot(current);
-
-                if(firstEmptyPlace != null)
-                {
-                    TransferFirstLayerItem(current, firstEmptyPlace);
-
-                    animations.Add(firstEmptyPlace.Items[0].RectTransform.
-                        DOAnchorPosY(firstEmptyPlace.RectTransform.anchoredPosition.y, Constants.FILL_ANIM_TIME_SEC).
-                        SetEase( Ease.InQuad).
-                        WaitForCompletion());
-                }
-            }
-
-            return animations.ToArray();
-        }
-
-        //
         private GridNode FindFirstEmptyNodeFromBot(GridNode node)
         {
             GridNode current = null;
@@ -393,13 +451,6 @@ namespace Metelab.PeakGameCase
                 to.Items.Add(from.Items[0]);
                 from.Items[0] = null;
             }
-        }
-
-        private IEnumerator FallAnimations(GridNode[] gridNodesToFill)
-        {
-
-
-            yield return null;
         }
 
         #endregion

@@ -6,18 +6,21 @@ using UnityEngine.UI;
 
 namespace Metelab.PeakGameCase
 {
-    public class Cube : NodeItemBase
+    public class Cube : NodeMainItem
     {
         public Image image;
         public VFXCubeBlast Prefab_VFX_CubeBlast;
+     
 
-        public static MeteObjectPool<VFXCubeBlast> objectPool_VFX_Blust = new MeteObjectPool<VFXCubeBlast>();   
+        public static MeteObjectPool<VFXCubeBlast> objectPool_VFX_Blust = new MeteObjectPool<VFXCubeBlast>();
+
+
 
         public override void Trigger()
         {
-            Color color = image.color;
-            color.a = 0.5f;
-            image.color = color;
+            //Color color = image.color;
+            //color.a = 0.5f;
+            //image.color = color;
         }
 
         public override void Explode()

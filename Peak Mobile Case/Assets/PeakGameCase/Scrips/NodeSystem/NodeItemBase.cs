@@ -7,6 +7,7 @@ namespace Metelab.PeakGameCase
 {
     public abstract class NodeItemBase : MeteMono
     {
+
         public NodeItemId ItemId;
         public NodeItemType ItemType;
 
