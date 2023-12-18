@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8176591507098030137}
   - component: {fileID: 8847709861399647085}
+  - component: {fileID: -2238676814321799330}
   m_Layer: 5
   m_Name: Cube_PURPLE
   m_TagString: Untagged
@@ -53,8 +54,27 @@ MonoBehaviour:
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
   ItemId: 4
   ItemType: 0
+  Ground: {fileID: 0}
+  State: 0
+  animCollision: {fileID: -2238676814321799330}
   image: {fileID: 5887229537109419268}
   Prefab_VFX_CubeBlast: {fileID: -5915875295948559891, guid: d84d387ff7248db40bb182a1871ca1f3, type: 3}
+--- !u!111 &-2238676814321799330
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3023506049935446033}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6703517242444428011
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ namespace Metelab.PeakGameCase
         public RectTransform Ground;
         private float fallSpeed = 0;
         public MainItemStates State;
+        public Animation animCollision;
 
         private void Update()
         {
@@ -25,6 +26,7 @@ namespace Metelab.PeakGameCase
                         RectTransform.anchoredPosition = Ground.anchoredPosition;
                         fallSpeed = 0;
                         State = MainItemStates.GROUND;
+                        animCollision.Play();
                     }
                 }
             }
@@ -38,6 +40,7 @@ namespace Metelab.PeakGameCase
                     {
                         RectTransform.anchoredPosition = Ground.anchoredPosition;
                         State = MainItemStates.GROUND;
+                        animCollision.Play();
                     }
                 }
             }

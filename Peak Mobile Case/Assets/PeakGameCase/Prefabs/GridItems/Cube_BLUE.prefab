@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7541028724712656222}
   - component: {fileID: 4939414921369861747}
+  - component: {fileID: 3839808073155159397}
   m_Layer: 5
   m_Name: Cube_BLUE
   m_TagString: Untagged
@@ -129,5 +130,24 @@ MonoBehaviour:
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
   ItemId: 2
   ItemType: 0
+  Ground: {fileID: 0}
+  State: 0
+  animCollision: {fileID: 3839808073155159397}
   image: {fileID: 5984843238180265367}
   Prefab_VFX_CubeBlast: {fileID: 4961063849502732791, guid: 46389fb1a3842734baf43860105c0ee2, type: 3}
+--- !u!111 &3839808073155159397
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703885175096704005}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0

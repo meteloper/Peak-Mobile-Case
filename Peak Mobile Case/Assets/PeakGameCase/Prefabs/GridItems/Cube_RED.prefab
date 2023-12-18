@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5009553070441064382}
   - component: {fileID: 2604857191815443966}
+  - component: {fileID: -2800444618184648052}
   m_Layer: 5
   m_Name: Cube_RED
   m_TagString: Untagged
@@ -53,8 +54,27 @@ MonoBehaviour:
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
   ItemId: 1
   ItemType: 0
+  Ground: {fileID: 0}
+  State: 0
+  animCollision: {fileID: -2800444618184648052}
   image: {fileID: 7365665002781627320}
   Prefab_VFX_CubeBlast: {fileID: -1406593282832764975, guid: 03151576a16602247a83986429a46385, type: 3}
+--- !u!111 &-2800444618184648052
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463228004748208969}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8188711075468188235
 GameObject:
   m_ObjectHideFlags: 0

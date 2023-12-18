@@ -80,8 +80,8 @@ namespace Metelab.PeakGameCase
 
     public class Constants : MonoBehaviour
     {
-        public const float FALL_ACCELERATION = 2000;
-        public const float FILL_SPEED = 1000;
+        public const float FALL_ACCELERATION = 3000;
+        public const float FILL_SPEED = 1250;
     }
 
     public struct Margin

@@ -79,7 +79,6 @@ namespace Metelab.PeakGameCase
                     for (int i = 0; i < gridSO.layers.Length; i++)
                     {
                         NodeItemId itemType = Utilities.CreateTypeToItemType(gridSO.layers[i].gridItemsCreateType[index]);
-                        Metelab.Log("("+x+","+y+")  "+i+" "+ gridSO.layers[i].gridItemsCreateType[index].ToString()+" "+ itemType);
 
                         if (itemType == NodeItemId.NONE)
                             continue;
@@ -202,6 +201,7 @@ namespace Metelab.PeakGameCase
 
                 for (int i = 0; i < colomns.Length; i++)
                 {
+                 
                     FallColumn(colomns[i]);
                 }
             }
@@ -226,7 +226,7 @@ namespace Metelab.PeakGameCase
                     NodeMainItem newItem = (NodeMainItem)Instantiate(itemPrefab, FallStartPoint);
                     totalHeight += newItem.RectTransform.sizeDelta.y + 20;
                     newItem.RectTransform.anchoredPosition = new Vector2(emptyNode.RectTransform.anchoredPosition.x, totalHeight);
-                    newItem.RectTransform.parent = GridNodesItemParent;
+                    newItem.RectTransform.SetParent(GridNodesItemParent);
                     newItem.State = MainItemStates.FALL;
                     emptyNode.MainItem = newItem;
                 }
