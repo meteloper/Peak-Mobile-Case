@@ -6,11 +6,7 @@ namespace Metelab.PeakGameCase
     [RequireComponent(typeof(Animation))]
     public class NodeDynamicItem : NodeItemBase
     {
-        public static MeteObjectPool<ParticleController> OPExplodeEffect = new MeteObjectPool<ParticleController>();
-  
         public MainItemStates State;
-        public ParticleController PrefabExplodeEffect;
-
         private Animation animCollision;
         private float fallSpeed = 0;
 
@@ -36,10 +32,7 @@ namespace Metelab.PeakGameCase
                         State = MainItemStates.GROUND;
 
                         if (Node.y == 0)
-                        {
                             DOVirtual.DelayedCall(0.5f, () => { Explode(ExplodeConditions.BOTTOM_ROW); });
-                        }
-                           
                     }
                 }
             }
@@ -56,25 +49,10 @@ namespace Metelab.PeakGameCase
                         State = MainItemStates.GROUND;
 
                         if (Node.y == 0)
-                        {
-                            DOVirtual.DelayedCall(0.5f,() => { Explode(ExplodeConditions.BOTTOM_ROW); });
-                        }
-                            
+                            DOVirtual.DelayedCall(0.5f, () => { Explode(ExplodeConditions.BOTTOM_ROW); });
                     }
                 }
             }
         }
-
-        public override void Explode(ExplodeConditions condition)
-        {
-            if(ExplodeCondition == condition)
-            {
-                gameObject.SetActive(false);
-                Node.TakeDynamicItem();
-                OPExplodeEffect.Instantiate(PrefabExplodeEffect, transform.position, Quaternion.identity).Play();
-                OnTriggered?.Invoke(this);
-            }
-        }
-
     }
 }

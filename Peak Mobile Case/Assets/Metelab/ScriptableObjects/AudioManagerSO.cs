@@ -22,6 +22,7 @@ namespace Metelab.AudioManager_
         public AudioClip Clip;
         [Range(0f,1f)]
         public float RelativeVolume = 1f;
+        public float Cooldown = 0.2f;
     }
 }
 

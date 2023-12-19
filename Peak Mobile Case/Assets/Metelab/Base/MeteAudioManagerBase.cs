@@ -15,7 +15,9 @@ namespace Metelab
         [SerializeField] private List<AudioSource> ListDeactiveAudioSource = new();
         [SerializeField] private List<AudioSource> ListActiveAudioSource = new();
         [SerializeField] private Dictionary<KEnum, AudioSource> DicLoopAudioSource = new();
+     
         private int mAudioSourceCount;
+        private Dictionary<KEnum, float> DicAudioToReadyTime = new Dictionary<KEnum, float>();
 
         /// <summary>
         /// Work like Awake
@@ -62,13 +64,29 @@ namespace Metelab
             StartCoroutine(IPlayOneShot(audio));
         }
 
-  
+        private bool IsCooldownFinished(KEnum audio)
+        {
+            if (DicAudioToReadyTime.ContainsKey(audio))
+                return Time.time >= DicAudioToReadyTime[audio];
+            else
+                return true;
+        }
+
+        private void SetCooldown(KEnum audio, float cooldown)
+        {
+            if (cooldown > 0)
+                DicAudioToReadyTime[audio] = Time.time + cooldown;
+        }
+
 
         private IEnumerator IPlayOneShot(KEnum audio)
         {
             AudioSource audioSource;
             AudioClipData audioClipData = AudioManagerData.GetAudioClipData(ConvertToInt(audio));
             if (audioClipData == null)
+                yield break;
+
+            if (!IsCooldownFinished(audio))
                 yield break;
 
                 Metelab.Log(this, $"IPlayOneShot-first-audio:{audio}, ListAudioSource:{ListDeactiveAudioSource.Count}");
@@ -91,6 +109,7 @@ namespace Metelab
             audioSource.clip = audioClipData.Clip;
            // audioSource.mute = !SettingsData.Instance.Sound;
             audioSource.Play();
+            SetCooldown(audio, audioClipData.Cooldown);
             yield return new WaitForSecondsRealtime(audioSource.clip.length);
 
             if(ListActiveAudioSource.Contains(audioSource))

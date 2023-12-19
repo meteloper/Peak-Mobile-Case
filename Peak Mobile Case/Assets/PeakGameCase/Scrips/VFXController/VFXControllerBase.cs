@@ -4,15 +4,11 @@ using UnityEngine;
 
 namespace Metelab.PeakGameCase
 {
-    public class ParticleController : MonoBehaviour
+    public abstract class VFXControllerBase : MonoBehaviour
     {
-        public new ParticleSystem particleSystem;
         public float LifeTime;
-
-
-        public void Play()
+        public virtual void Play()
         {
-            particleSystem.Play();
             StartCoroutine(ILifeTime());
         }
 
@@ -21,8 +17,5 @@ namespace Metelab.PeakGameCase
             yield return new WaitForSeconds(LifeTime);
             gameObject.SetActive(false);
         }
-     
-
-
     }
 }

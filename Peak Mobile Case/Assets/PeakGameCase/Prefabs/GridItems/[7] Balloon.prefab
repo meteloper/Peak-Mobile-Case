@@ -52,11 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
-  ExplodeCondition: 1
+  ExplodeCondition: 12
+  TriggerCondition: 0
   ItemId: 7
   ItemType: 2
-  State: 0
+  ExplodeAudio: 2
   PrefabExplodeEffect: {fileID: 4961063849502732791, guid: 46389fb1a3842734baf43860105c0ee2, type: 3}
+  State: 0
 --- !u!111 &8927077420433713611
 Animation:
   m_ObjectHideFlags: 0

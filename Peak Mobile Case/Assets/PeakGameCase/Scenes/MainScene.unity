@@ -473,7 +473,6 @@ MonoBehaviour:
   GridNodePrefab: {fileID: -6222649093760760382, guid: 0e2a844fa01d8d24480ca36e69822c5f, type: 3}
   DynamicGridBorder: {fileID: 928166095}
   ArrayGridNodes: []
-  currentGameState: 0
 --- !u!225 &928166094
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -679,7 +678,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1022834048
 RectTransform:
@@ -768,6 +767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1162401099}
+  - component: {fileID: 1162401100}
   m_Layer: 5
   m_Name: topBar
   m_TagString: Untagged
@@ -796,6 +796,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!223 &1162401100
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162401098}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0
 --- !u!1 &1449672868
 GameObject:
   m_ObjectHideFlags: 0

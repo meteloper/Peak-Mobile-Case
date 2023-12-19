@@ -12,18 +12,6 @@ namespace Metelab.PeakGameCase
         FILL,
     }
 
-    public enum ConstraintType
-    {
-        TIME,
-        ACCELERATION
-    }
-
-    public enum GameStates
-    {
-        CAN_MOVE,
-        MOVE_STARTED
-    }
-
     public enum Directions
     {
         UP = 0,
@@ -45,11 +33,24 @@ namespace Metelab.PeakGameCase
         DUCK
     }
 
+    [Flags]
     public enum ExplodeConditions
     {
-        EXPLODE,
-        EXPLODE_SIDE,
-        BOTTOM_ROW
+        NONE = 0,
+        CLICK = 1,
+        MATCH = 2,
+        MATCH_SIDE = 4,
+        ROCKET = 8,
+        BOTTOM_ROW = 16
+       
+    }
+
+    [Flags]
+    public enum TriggerConditions
+    {
+        NONE = 0,
+        CLICK = 1, 
+        EXPLODE = 2
     }
 
     public enum NodeItemIds:int
@@ -91,6 +92,7 @@ namespace Metelab.PeakGameCase
         public const int CUBE_COUNT = 5;
         public const float FALL_ACCELERATION = 3000;
         public const float FILL_SPEED = 1250;
+        public const float ROCKET_SPEED = 1250;
     }
 
     public struct Margin
