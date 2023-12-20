@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GridNodeItemPrefabs
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
-  GridItems:
+  NodeItems:
   - {fileID: -8120728392711082579, guid: 49386e0bc1b178848b708d0f72a4d5be, type: 3}
   - {fileID: 2989264028946007832, guid: 5a626ede98280e64d9b72988e709c40d, type: 3}
   - {fileID: 5122730693576428937, guid: be9cfa54e7c35454a804be642a6610f0, type: 3}

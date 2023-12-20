@@ -1,17 +1,9 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks.Sources;
-using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.UIElements;
-using Random = UnityEngine.Random;
 
 namespace Metelab.PeakGameCase
 {
@@ -26,6 +18,7 @@ namespace Metelab.PeakGameCase
         public RectTransform GridNodesItemParent;
         public GridNode GridNodePrefab;
         public DynamicGridBorder DynamicGridBorder;
+        public GoalsBoard GoalsBoard;
 
         [Header("For Debug")]
         [SerializeField] private GridNode[] ArrayGridNodes;
@@ -37,6 +30,7 @@ namespace Metelab.PeakGameCase
             base.Init();
             CalculateGridSizeAndPosition();
             CreateGrid();
+            GoalsBoard.SetGoals(gridSO.Goals);
         }
        
 
@@ -69,7 +63,7 @@ namespace Metelab.PeakGameCase
                     //Creating Nodes
                     int index = y * gridSO.width + x;
 
-                    if (gridSO.layers[0].gridItemsCreateType[index] == NodeItemCreateId.SPACE)
+                    if (gridSO.layers[0].gridItemsCreateType[index] == NodeItemCreateIds.SPACE)
                         continue;
 
                     ArrayGridNodes[index] = Instantiate(GridNodePrefab, GridNodesParent);
@@ -101,7 +95,7 @@ namespace Metelab.PeakGameCase
 
         private NodeItem CreateNodeItem(GridNode node, NodeItemIds itemId, Transform parent = null)
         {
-            NodeItem itemPrefab = GridNodeItemPrefabsSO.Instance.GetGridItemPrefab(itemId);
+            NodeItem itemPrefab = NodeItemPrefabsSO.Instance.GetGridItemPrefab(itemId);
             NodeItem nodeItem = OPNodeItem.Instantiate(itemPrefab, parent != null ? parent : GridNodesItemParent);
             nodeItem.OnExploded = OnExplodedNodeItem;
             nodeItem.OnTriggered = OnTriggeredNodeItem;
@@ -126,7 +120,7 @@ namespace Metelab.PeakGameCase
 
         private void OnExplodedNodeItem(NodeItem item, ExplodeConditions condition)
         {
-            if (item.ItemType == NodeItemTypes.DUCK)
+            if (item.ItemType == NodeItemTypes.TOY)
             {
                 FillColumn(item.GridNode.x);
                 FallColumn(item.GridNode.x);
@@ -202,41 +196,25 @@ namespace Metelab.PeakGameCase
         private IEnumerator ITriggerCube(GridNode node)
         {
             GridNode[] matchNodes = GetMatch(node);
-
+            GridNode[] explodeSideNodes = GetNodesNeighbours(matchNodes);
             Metelab.Log(this, $"{nameof(ITriggerCube)}: {node.name} : Match Count: {matchNodes.Length}");
 
             if (matchNodes.Length >= 5)
             {
-                StartCoroutine(IMergeCube(matchNodes, Utilities.CreateTypeToItemType(NodeItemCreateId.RANDOM_ROCKET)));
+                ExplodeNodes(matchNodes, ExplodeConditions.MERGE);
+                StartCoroutine(IMergeCube(matchNodes, Utilities.CreateTypeToItemType(NodeItemCreateIds.RANDOM_ROCKET)));
+                ExplodeNodes(explodeSideNodes, ExplodeConditions.MATCH_SIDE);
             }
             else if (matchNodes.Length > 1)
             {
-                for (int i = 0; i < matchNodes.Length; i++)
-                {
-                    matchNodes[i].DynamicItem.Explode(ExplodeConditions.MATCH);
-                }
-
-                GridNode[] explodeSideNodes = GetNodesNeighbours(matchNodes);
-
-                for (int i = 0; i < explodeSideNodes.Length; i++)
-                {
-                    for (int j = 0; j < explodeSideNodes[i].Items.Count; j++)
-                    {
-                        if (explodeSideNodes[i].IsHaveDynamicItem)
-                        {
-                            explodeSideNodes[i].Items[j].Explode(ExplodeConditions.MATCH_SIDE);
-                        }
-                    }
-                }
+                ExplodeNodes(matchNodes,ExplodeConditions.MATCH);
+                ExplodeNodes(explodeSideNodes, ExplodeConditions.MATCH_SIDE);
 
                 yield return new WaitForSeconds(0.1f);
                 FillAndFall();
             }
         }
 
-        [Header("Test Values For Merge")]
-
-        public Ease movementEase;
         private IEnumerator IMergeCube(GridNode[] nodes,NodeItemIds itemID)
         {
             ActiveAnimationCount++;
@@ -276,12 +254,25 @@ namespace Metelab.PeakGameCase
 
             CreateNodeItem(nodes[0], itemID).NodeItemDynamic?.Rocket?.PlayMergeIntroEffects();
 
+            
+
             yield return null;
 
             ActiveAnimationCount--;
 
             if(ActiveAnimationCount == 0)
                 FillAndFall();
+        }
+
+        private void ExplodeNodes(GridNode[] nodes, ExplodeConditions condition)
+        {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                for (int j = 0; j < nodes[i].Items.Count; j++)
+                {
+                    nodes[i].Items[j].Explode(condition);
+                }
+            }
         }
 
 
@@ -345,7 +336,7 @@ namespace Metelab.PeakGameCase
                 if (emptyNode!= null && !emptyNode.IsHaveDynamicItem)
                 {
                     //Creating New Cube
-                    NodeItemIds itemId = Utilities.CreateTypeToItemType(NodeItemCreateId.RANDOM_CUBE);
+                    NodeItemIds itemId = Utilities.CreateTypeToItemType(NodeItemCreateIds.RANDOM_CUBE);
                     NodeItemDynamic newItem = CreateNodeItem(emptyNode, itemId, FallStartPoint).NodeItemDynamic;
                     totalHeight += newItem.RectTransform.sizeDelta.y + 20;
                     newItem.RectTransform.anchoredPosition = new Vector2(emptyNode.RectTransform.anchoredPosition.x, totalHeight);

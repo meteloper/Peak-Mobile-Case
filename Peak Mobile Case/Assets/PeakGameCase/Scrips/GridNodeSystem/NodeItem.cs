@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.Progress;
 
 namespace Metelab.PeakGameCase
 {
@@ -47,12 +48,19 @@ namespace Metelab.PeakGameCase
         {
             if (ExplodeCondition.HasFlag(condition))
             {
-                gameObject.SetActive(false);
-                GridNode.TakeDynamicItem();
-                OP_VFXController.Instantiate(PrefabExplodeEffect, RectTransform.GetChild(0).transform.position, Quaternion.identity, transform.parent.parent).Play();
-                OnExploded?.Invoke(this, condition);
-                AudioManager.Instance.PlayOneShot(ExplodeAudio);
+                GameEvents.InvokeNodeItemExplode(this);
 
+                if (!condition.HasFlag(ExplodeConditions.MERGE))
+                {
+                    gameObject.SetActive(false);
+                    GridNode.TakeDynamicItem();
+                    OP_VFXController.Instantiate(PrefabExplodeEffect, RectTransform.GetChild(0).transform.position, Quaternion.identity, transform.parent.parent).Play();
+                    AudioManager.Instance.PlayOneShot(ExplodeAudio);
+                }
+
+               
+                OnExploded?.Invoke(this, condition);
+  
                 if (TriggerCondition.HasFlag(TriggerConditions.EXPLODE))
                 {
                     Trigger();

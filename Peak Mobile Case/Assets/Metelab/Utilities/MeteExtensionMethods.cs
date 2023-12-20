@@ -9,6 +9,24 @@ namespace Metelab
 {
     public static class MeteExtensionMethods
     {
+        public static void SetActiveChildren(this Transform parent, bool isActive)
+        {
+            if (parent == null || parent.childCount == 0)
+                return;
+
+            for (int i = 0;i< parent.childCount ; i++)
+            {
+                parent.GetChild(i).gameObject.SetActive(isActive);
+            }
+        }
+
+        public static void SetActive(this Transform transform, bool isActive)
+        {
+            transform.gameObject.SetActive(isActive);
+        }
+
+
+
         /// <summary>
         /// All child will be destory but exception indexs will not be destory.
         /// </summary>
