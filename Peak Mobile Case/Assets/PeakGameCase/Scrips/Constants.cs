@@ -70,9 +70,9 @@ namespace Metelab.PeakGameCase
 
     public enum NodeItemCreateId:int
     {
-        ROCKET_RANDOM = -4,
-        CUBE_RANDOM = -3,
-        RANDOM = -2,
+        RANDOM_ROCKET = -4,
+        RANDOM_CUBE = -3,
+        RANDOM_ALL = -2,
         SPACE = -1,
 
         CUBE_YELLOW = 0,

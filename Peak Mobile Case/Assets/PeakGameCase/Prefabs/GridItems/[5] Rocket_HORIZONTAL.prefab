@@ -85,8 +85,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5211753436101766156}
-  - component: {fileID: 5227593649735523333}
+  - component: {fileID: 7658852552158111992}
   - component: {fileID: 6757144043506270476}
+  - component: {fileID: 2168594921780224334}
   m_Layer: 5
   m_Name: '[5] Rocket_HORIZONTAL'
   m_TagString: Untagged
@@ -115,7 +116,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &5227593649735523333
+--- !u!114 &7658852552158111992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +125,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3945676376548857275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b297dfb5229ba204a89e907a3231f0cf, type: 3}
+  m_Script: {fileID: 11500000, guid: ddc2d1b21b5af0f45aaa9faa656aec9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
@@ -135,6 +136,8 @@ MonoBehaviour:
   ExplodeAudio: -1
   PrefabExplodeEffect: {fileID: 5512788937178486674, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
   State: 0
+  PrefabMergeIntroEffect: {fileID: 1775517767541990198, guid: 06db7e240c285ae47bc28dbac5aab53d, type: 3}
+  RocketBody: {fileID: 3386087093523347063}
 --- !u!111 &6757144043506270476
 Animation:
   m_ObjectHideFlags: 0
@@ -151,6 +154,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!225 &2168594921780224334
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3945676376548857275}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6580034525164868907
 GameObject:
   m_ObjectHideFlags: 0

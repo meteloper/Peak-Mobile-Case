@@ -8,9 +8,9 @@ namespace Metelab.PeakGameCase
     [CreateAssetMenu(fileName = "GridNodeItemPrefabs", menuName = "PeakGameCase/Single/GridNodeItemPrefabs")]
     public class GridNodeItemPrefabsSO:MeteSingletonScriptableObject<GridNodeItemPrefabsSO>
     {
-        public NodeItemBase[] GridItems;
+        public NodeItem[] GridItems;
 
-        public NodeItemBase GetGridItemPrefab(NodeItemIds gridItemType)
+        public NodeItem GetGridItemPrefab(NodeItemIds gridItemType)
         {
             return GridItems[(int)gridItemType];
         }

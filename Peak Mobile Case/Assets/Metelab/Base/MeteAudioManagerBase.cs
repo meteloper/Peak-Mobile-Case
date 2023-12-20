@@ -89,7 +89,7 @@ namespace Metelab
             if (!IsCooldownFinished(audio))
                 yield break;
 
-                Metelab.Log(this, $"IPlayOneShot-first-audio:{audio}, ListAudioSource:{ListDeactiveAudioSource.Count}");
+               // Metelab.Log(this, $"IPlayOneShot-first-audio:{audio}, ListAudioSource:{ListDeactiveAudioSource.Count}");
             if (ListDeactiveAudioSource.Count > 0)
             {
                 audioSource = ListDeactiveAudioSource[0];

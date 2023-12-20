@@ -123,5 +123,13 @@ PrefabInstance:
       propertyPath: PrefabExplodeEffect
       value: 
       objectReference: {fileID: 4429234862312202982, guid: 778a935e7a74f1d40a1eb449dd9df794, type: 3}
+    - target: {fileID: 7658852552158111992, guid: 7d8e4c06236e68d428f4ece3f7c47af3, type: 3}
+      propertyPath: ItemId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7658852552158111992, guid: 7d8e4c06236e68d428f4ece3f7c47af3, type: 3}
+      propertyPath: PrefabExplodeEffect
+      value: 
+      objectReference: {fileID: 4429234862312202982, guid: 778a935e7a74f1d40a1eb449dd9df794, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d8e4c06236e68d428f4ece3f7c47af3, type: 3}

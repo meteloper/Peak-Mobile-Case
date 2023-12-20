@@ -43,14 +43,14 @@ namespace Metelab.PeakGameCase
                 { new Color32(153,229,80,255),NodeItemCreateId.CUBE_GREEN },
                 { new Color32(172,50,50,255),NodeItemCreateId.CUBE_RED },
                 { new Color32(118,66,138,255),NodeItemCreateId.CUBE_PURPLE },
-                { new Color32(138,111,48,255),NodeItemCreateId.CUBE_RANDOM },
+                { new Color32(138,111,48,255),NodeItemCreateId.RANDOM_CUBE },
                 { new Color32(255,255,255,255),NodeItemCreateId.SPACE },
                 { new Color32(215,123,186,255), NodeItemCreateId.BALLOON},
                 { new Color32(63,63,116,255), NodeItemCreateId.ROCKET_HORIZONTAL},
                 { new Color32(55,148,110,255), NodeItemCreateId.ROCKET_VERTICAL},
-                { new Color32(48,96,130,255), NodeItemCreateId.ROCKET_RANDOM},
+                { new Color32(48,96,130,255), NodeItemCreateId.RANDOM_ROCKET},
                 { new Color32(34,32,52,255), NodeItemCreateId.DUCK},
-                { new Color32(0,0,0,255), NodeItemCreateId.RANDOM},
+                { new Color32(0,0,0,255), NodeItemCreateId.RANDOM_ALL},
             };
 
             height = gridTextures[0].height;

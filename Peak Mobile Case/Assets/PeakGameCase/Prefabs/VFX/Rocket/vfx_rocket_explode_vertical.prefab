@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_RootOrder
@@ -21,19 +21,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_SizeDelta.x
@@ -73,11 +73,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 861
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 614
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3608326364188782116, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -97,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5512788937178486675, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
       propertyPath: m_Name
-      value: vfx_rocket_horizontal Variant
+      value: vfx_rocket_vertical
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 012fa3470bcf33f418b05ff19c5c8f81, type: 3}
