@@ -9,7 +9,7 @@ namespace Metelab.PeakGameCase
 {
     public class DynamicGridBorder : MonoBehaviour
     {
-       // private static MeteObjectPool<DynamicGridBorderNode> borderPool = new MeteObjectPool<DynamicGridBorderNode>();
+        private static MeteObjectPool<DynamicGridBorderItem> borderPool = new MeteObjectPool<DynamicGridBorderItem>();
 
         public RectTransform bordersParent;
         public int Width;
@@ -19,18 +19,18 @@ namespace Metelab.PeakGameCase
         public int BorderNodeSize = 50;
 
         [Header("Prefabs")]
-        [SerializeField] private GameObject prefabUp;
-        [SerializeField] private GameObject prefabUpRight;
-        [SerializeField] private GameObject prefabRight;
-        [SerializeField] private GameObject prefabDownRight;
-        [SerializeField] private GameObject prefabDown;
-        [SerializeField] private GameObject prefabDownLeft;
-        [SerializeField] private GameObject prefabLeft;
-        [SerializeField] private GameObject prefabUpLeft;
-        [SerializeField] private GameObject prefabInUpRight;
-        [SerializeField] private GameObject prefabInDownRight;
-        [SerializeField] private GameObject prefabInDownLeft;
-        [SerializeField] private GameObject prefabInUpLeft;
+        [SerializeField] private DynamicGridBorderItem prefabUp;
+        [SerializeField] private DynamicGridBorderItem prefabUpRight;
+        [SerializeField] private DynamicGridBorderItem prefabRight;
+        [SerializeField] private DynamicGridBorderItem prefabDownRight;
+        [SerializeField] private DynamicGridBorderItem prefabDown;
+        [SerializeField] private DynamicGridBorderItem prefabDownLeft;
+        [SerializeField] private DynamicGridBorderItem prefabLeft;
+        [SerializeField] private DynamicGridBorderItem prefabUpLeft;
+        [SerializeField] private DynamicGridBorderItem prefabInUpRight;
+        [SerializeField] private DynamicGridBorderItem prefabInDownRight;
+        [SerializeField] private DynamicGridBorderItem prefabInDownLeft;
+        [SerializeField] private DynamicGridBorderItem prefabInUpLeft;
 
         public void SetGridSize(int witdh, int height)
         {
@@ -56,6 +56,7 @@ namespace Metelab.PeakGameCase
 
         public void CreateBorder()
         {
+            borderPool.DeactivePool();
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
@@ -115,9 +116,9 @@ namespace Metelab.PeakGameCase
             else
                 return false;
         }
-        private void CreateBorderNode(GameObject prefab, int x, int y)
+        private void CreateBorderNode(DynamicGridBorderItem prefab, int x, int y)
         {
-            RectTransform borderNodeRect = Instantiate(prefab, bordersParent).GetComponent<RectTransform>();
+            RectTransform borderNodeRect = borderPool.Instantiate(prefab, bordersParent).GetComponent<RectTransform>();
             borderNodeRect.anchoredPosition =  new Vector2(BorderNodeSize * (x-1), BorderNodeSize * (y-1));
         }
     }

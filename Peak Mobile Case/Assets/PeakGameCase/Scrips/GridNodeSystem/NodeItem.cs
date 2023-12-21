@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
 
 namespace Metelab.PeakGameCase
 {
@@ -12,11 +7,10 @@ namespace Metelab.PeakGameCase
     {
         protected static MeteObjectPool<VFXControllerBase> OP_VFXController = new MeteObjectPool<VFXControllerBase>();
 
-        public Action<NodeItem> OnTriggered;
-        public Action<NodeItem, ExplodeConditions> OnExploded;
-
+        public RectTransform Center;
         public ExplodeConditions ExplodeCondition;
         public TriggerConditions TriggerCondition;
+        public GoalItemIds GoalItemId;
         public NodeItemIds ItemId;
         public NodeItemTypes ItemType;
         public AudioNames ExplodeAudio;
@@ -44,33 +38,20 @@ namespace Metelab.PeakGameCase
             Init();
         }
 
-        public virtual void Explode(ExplodeConditions condition)
+        public virtual bool IsCanExplode(ExplodeConditions condition)
         {
-            if (ExplodeCondition.HasFlag(condition))
-            {
-                GameEvents.InvokeNodeItemExplode(this);
-
-                if (!condition.HasFlag(ExplodeConditions.MERGE))
-                {
-                    gameObject.SetActive(false);
-                    GridNode.TakeDynamicItem();
-                    OP_VFXController.Instantiate(PrefabExplodeEffect, RectTransform.GetChild(0).transform.position, Quaternion.identity, transform.parent.parent).Play();
-                    AudioManager.Instance.PlayOneShot(ExplodeAudio);
-                }
-
-               
-                OnExploded?.Invoke(this, condition);
-  
-                if (TriggerCondition.HasFlag(TriggerConditions.EXPLODE))
-                {
-                    Trigger();
-                }
-            }
+            return ExplodeCondition.HasFlag(condition);
         }
 
-        public virtual void Trigger()
+        public virtual void PlayExplode()
         {
-            OnTriggered(this);
+            OP_VFXController.Instantiate(PrefabExplodeEffect, RectTransform.GetChild(0).transform.position, Quaternion.identity, transform.parent.parent).Play();
+            AudioManager.Instance.PlayOneShot(ExplodeAudio);
+        }
+
+        public void PlayShake()
+        {
+            anim.Play("Shake");
         }
 
         public void PlayCollision()

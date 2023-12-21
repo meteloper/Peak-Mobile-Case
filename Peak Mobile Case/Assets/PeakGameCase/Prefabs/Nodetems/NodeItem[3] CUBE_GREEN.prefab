@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: ItemId
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -8120728392711082579, guid: 49386e0bc1b178848b708d0f72a4d5be, type: 3}
+      propertyPath: GoalItemId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8120728392711082579, guid: 49386e0bc1b178848b708d0f72a4d5be, type: 3}
+      propertyPath: GoalItems.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -566436179243620606, guid: 49386e0bc1b178848b708d0f72a4d5be, type: 3}
       propertyPath: ItemId
       value: 3
@@ -25,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 2bf0fbf8f8384bd48a6bae030ff2805c, type: 3}
     - target: {fileID: 4964711791738486941, guid: 49386e0bc1b178848b708d0f72a4d5be, type: 3}
       propertyPath: m_Name
-      value: '[3] Cube_GREEN'
+      value: NodeItem[3] CUBE_GREEN
       objectReference: {fileID: 0}
     - target: {fileID: 6934018337664065810, guid: 49386e0bc1b178848b708d0f72a4d5be, type: 3}
       propertyPath: m_Pivot.x

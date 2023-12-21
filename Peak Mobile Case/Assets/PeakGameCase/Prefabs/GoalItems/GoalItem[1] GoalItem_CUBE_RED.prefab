@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 319548998649772656, guid: d63e53fbd44ee8141b19c510e4cb6c1d, type: 3}
       propertyPath: m_Name
-      value: GoalItem[0] GoalItem_CUBE_YELLOW
+      value: GoalItem[1] GoalItem_CUBE_RED
       objectReference: {fileID: 0}
     - target: {fileID: 3607355903133460030, guid: d63e53fbd44ee8141b19c510e4cb6c1d, type: 3}
       propertyPath: m_Pivot.x
@@ -77,11 +77,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3607355903133460030, guid: d63e53fbd44ee8141b19c510e4cb6c1d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 147.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3607355903133460030, guid: d63e53fbd44ee8141b19c510e4cb6c1d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3607355903133460030, guid: d63e53fbd44ee8141b19c510e4cb6c1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

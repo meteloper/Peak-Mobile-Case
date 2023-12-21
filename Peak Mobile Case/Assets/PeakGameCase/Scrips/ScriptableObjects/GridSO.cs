@@ -1,10 +1,7 @@
 
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.Progress;
 
 namespace Metelab.PeakGameCase
 {
@@ -34,7 +31,7 @@ namespace Metelab.PeakGameCase
 
 #if UNITY_EDITOR
        
-        public void LoadFromString()
+        public void LoadFromTexture()
         {
             Dictionary<Color32,NodeItemCreateIds> createTypeToColor = new Dictionary<Color32,NodeItemCreateIds>
             {

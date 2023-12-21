@@ -10,17 +10,7 @@ namespace Metelab.PeakGameCase
     {
         public Sprite GoalIcon;
         public int Count;
-        public GoalItemRequirements[] GoalItemsRequirements;
-    }
-
-    [Serializable]
-    public class GoalItemRequirements
-    {
-        public GoalItemId GoalItemID;
-
-        [Header("Requirements")]
-        public NodeItemIds NodeItemID;
-        public NodeItemTypes NodeItemType;
+        public GoalItemIds[] GoalItemIds;
     }
 
 

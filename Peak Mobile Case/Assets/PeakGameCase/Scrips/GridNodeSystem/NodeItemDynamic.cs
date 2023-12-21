@@ -10,6 +10,8 @@ namespace Metelab.PeakGameCase
    
         private float fallSpeed = 0;
 
+        public ClickEffects ClickEffect ;
+
         public Cube Cube
         {
             get
@@ -32,7 +34,7 @@ namespace Metelab.PeakGameCase
             }
         }
 
-
+    
 
         private void Update()
         {
@@ -49,9 +51,7 @@ namespace Metelab.PeakGameCase
                         fallSpeed = 0;
                         PlayCollision();
                         State = MainItemStates.GROUND;
-
-                        if (GridNode.y == 0)
-                            DOVirtual.DelayedCall(0.5f, () => { Explode(ExplodeConditions.BOTTOM_ROW); });
+                        GameEvents.InvokeOnNodeItemGround(this);
                     }
                 }
             }
@@ -66,9 +66,8 @@ namespace Metelab.PeakGameCase
                         RectTransform.anchoredPosition = GridNode.RectTransform.anchoredPosition;
                         PlayCollision();
                         State = MainItemStates.GROUND;
+                        GameEvents.InvokeOnNodeItemGround(this);
 
-                        if (GridNode.y == 0)
-                            DOVirtual.DelayedCall(0.5f, () => { Explode(ExplodeConditions.BOTTOM_ROW); });
                     }
                 }
             }

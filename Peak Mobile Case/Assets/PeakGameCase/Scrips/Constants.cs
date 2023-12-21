@@ -25,25 +25,33 @@ namespace Metelab.PeakGameCase
         MAX = 8
     }
 
+    public enum ClickEffects
+    {
+        NONE,
+        TRIGGER,
+        EXPLODE
+    }
+
     [Flags]
     public enum ExplodeConditions
     {
         NONE = 0,
-        CLICK = 1,
-        MATCH = 2,
-        MATCH_SIDE = 4,
-        ROCKET = 8,
-        BOTTOM_ROW = 16,
-        MERGE = 32
+        MATCH = 1,
+        MATCH_SIDE = 2,
+        ROCKET = 4,
+        BOTTOM_ROW = 8,
+        MERGE = 16,
+        MERGE_SIDE = 32,
     }
+
 
     [Flags]
     public enum TriggerConditions
     {
         NONE = 0,
-        CLICK = 1, 
-        EXPLODE = 2,
-        MERGE = 4
+        ON_CLICK = 1,
+        ON_EXPLODE = 2,
+        ON_MERGE = 4
     }
 
     public enum NodeItemTypes:int
@@ -89,8 +97,9 @@ namespace Metelab.PeakGameCase
         MAX = 9
     }
 
-    public enum GoalItemId
+    public enum GoalItemIds
     {
+        NONE = -1,
         CUBE_YELLOW = 0,
         CUBE_RED = 1,
         CUBE_BLUE = 2,
@@ -98,6 +107,12 @@ namespace Metelab.PeakGameCase
         CUBE_PURPLE = 4,
         BALLOON_BASIC = 5,
         TOY_DUCK = 6
+    }
+
+    public enum EndGameResult
+    {
+        WIN,
+        LOSE
     }
 
 

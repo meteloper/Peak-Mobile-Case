@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680d6160e37f0614d87ac436ae36b6d5, type: 3}
+  m_Name: Grid 4
+  m_EditorClassIdentifier: 
+  LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
+  height: 13
+  width: 9
+  maxMoveCount: 25
+  Goals:
+  - {fileID: 11400000, guid: 668adb0bc9cd6f14a9bc18c1e45839e4, type: 2}
+  layers:
+  - gridItemsCreateType: 01000000fdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdffffff0300000001000000010000000100000001000000fdffffff03000000030000000300000003000000fdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdffffff01000000fdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdffffff010000000100000001000000fdfffffffdfffffffdfffffffdfffffffdffffff0100000001000000010000000100000001000000fdfffffffdfffffffdfffffffdffffff0100000001000000010000000100000001000000fdfffffffdfffffffdfffffffdffffff01000000fdffffff01000000fdffffff01000000fdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdfffffffdffffff08000000fdfffffffdfffffffdffffff08000000fdfffffffdffffff
+  gridTextures:
+  - {fileID: 2800000, guid: b45dc2f55ca8d464f8a19bfa86d04a42, type: 3}

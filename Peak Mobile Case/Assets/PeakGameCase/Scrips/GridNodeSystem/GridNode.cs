@@ -1,11 +1,7 @@
-using Metelab;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
 
 namespace Metelab.PeakGameCase
 {
@@ -15,6 +11,7 @@ namespace Metelab.PeakGameCase
         public int x;
         public int y;
         public Action<GridNode> OnClick;
+        public RectTransform Center;
         public bool IsActive
         {
             get

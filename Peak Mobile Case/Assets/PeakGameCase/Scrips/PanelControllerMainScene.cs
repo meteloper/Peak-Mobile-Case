@@ -7,7 +7,9 @@ namespace Metelab.PeakGameCase
 {
     public enum PanelNames:short
     {
-        GamePanel = 0
+        GamePanel = 0,
+        LevelSelection = 1,
+        GameOver = 2
     }
 
 

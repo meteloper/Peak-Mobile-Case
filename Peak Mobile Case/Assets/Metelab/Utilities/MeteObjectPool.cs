@@ -7,6 +7,7 @@ namespace Metelab
 {
     public class MeteObjectPool<T> where T : MonoBehaviour
     {
+        private List<GameObject> allPools = new List<GameObject>();
         private Dictionary<int, List<T>> dicPools = new();
 
         public T Instantiate(T prefab, Vector3 startPos, Quaternion quaternion,Transform parent = null)
@@ -24,15 +25,19 @@ namespace Metelab
             {
                 instance = MonoBehaviour.Instantiate(prefab, startPos, quaternion, parent);
                 poolList.Add(instance);
+                allPools.Add(instance.gameObject);
             }
             else
             {
                 instance.transform.position = startPos;
                 instance.transform.rotation = quaternion;
                 instance.transform.parent = parent;
+                instance.transform.SetAsLastSibling();
             }
 
             instance.gameObject.SetActive(true);
+
+            
 
             return instance;
         }
@@ -52,13 +57,30 @@ namespace Metelab
             {
                 instance = MonoBehaviour.Instantiate(prefab,parent);
                 poolList.Add(instance);
+                allPools.Add(instance.gameObject);
             }
             else
+            {
                 instance.transform.SetParent(parent);
+                instance.transform.SetAsLastSibling();
+            }
+              
 
             instance.gameObject.SetActive(true);
 
             return instance;
+        }
+
+        public void DeactivePool()
+        {
+            foreach (var list in dicPools.Values)
+            {
+                foreach (var item in list)
+                {
+                    item.gameObject.SetActive(false);
+                }
+            }
+
         }
 
 

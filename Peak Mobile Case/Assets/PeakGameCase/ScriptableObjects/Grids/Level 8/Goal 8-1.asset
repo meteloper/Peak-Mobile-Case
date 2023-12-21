@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f510671a7f125b43b3fcf3351c90542, type: 3}
-  m_Name: New Goal
+  m_Name: Goal 8-1
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
-  GoalIcon: {fileID: 21300000, guid: 75d380e36379d7d4398c762faf717abb, type: 3}
-  Count: 10
-  GoalItemsRequirements:
-  - GoalItemID: 0
-    NodeItemID: 0
-    NodeItemType: 0
+  GoalIcon: {fileID: 21300000, guid: bf82f89528aa5cc44855160075fd63ea, type: 3}
+  Count: 40
+  GoalItemIds: 05000000

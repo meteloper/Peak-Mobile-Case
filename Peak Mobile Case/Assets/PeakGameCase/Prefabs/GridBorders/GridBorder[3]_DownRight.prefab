@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7420131635309437002}
   - component: {fileID: 1418786767169551296}
   - component: {fileID: 2281792116667674072}
+  - component: {fileID: -4622280135279101494}
   m_Layer: 5
   m_Name: GridBorder[3]_DownRight
   m_TagString: Untagged
@@ -77,6 +78,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-4622280135279101494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2199173162154851940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d98b8391b01e149b857c4dbe0276ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2502990491804427131
 GameObject:
   m_ObjectHideFlags: 0

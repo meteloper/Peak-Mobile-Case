@@ -14,9 +14,9 @@ namespace Metelab.PeakGameCase
             DrawDefaultInspector();
 
             GridSO myScript = (GridSO)target;
-            if (GUILayout.Button(nameof(myScript.LoadFromString)))
+            if (GUILayout.Button(nameof(myScript.LoadFromTexture)))
             {
-                myScript.LoadFromString();
+                myScript.LoadFromTexture();
             }
         }
     }

@@ -19,10 +19,10 @@ MonoBehaviour:
     Cooldown: 0.05
   - Clip: {fileID: 8300000, guid: b19d810f959672545bdb99ce0a79e90c, type: 3}
     RelativeVolume: 1
-    Cooldown: 0.1
+    Cooldown: 0.05
   - Clip: {fileID: 8300000, guid: 81e28798c01a65b419e31f48d9f41c45, type: 3}
     RelativeVolume: 1
-    Cooldown: 0.1
+    Cooldown: 0.05
   - Clip: {fileID: 8300000, guid: c21d25c299266cd48b4eadd2dc7f87b6, type: 3}
     RelativeVolume: 1
-    Cooldown: 0.1
+    Cooldown: 0.05

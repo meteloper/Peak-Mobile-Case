@@ -91,7 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
-  GridItems: []
+  Items: []
+  x: 0
+  y: 0
+  Center: {fileID: 5769820477389658650}
 --- !u!1 &5804811726340150578
 GameObject:
   m_ObjectHideFlags: 0

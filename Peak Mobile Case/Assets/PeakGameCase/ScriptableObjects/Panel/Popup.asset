@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6aa02c8d7737447d89d613790037d4a, type: 3}
+  m_Name: Popup
+  m_EditorClassIdentifier: 
+  LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
+  IsFullScreenPanel: 0
+  UpSafe: 1
+  DownSafe: 1

@@ -18,14 +18,12 @@ namespace Metelab
 
         public virtual void Active()
         {
-            if (!gameObject.activeSelf)
-                gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         public virtual void Deactive()
         {
-            if (gameObject.activeSelf)
-                gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         private RectTransform mRectTransform;

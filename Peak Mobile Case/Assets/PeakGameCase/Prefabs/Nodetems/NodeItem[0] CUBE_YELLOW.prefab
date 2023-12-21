@@ -129,13 +129,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LogData: {fileID: 11400000, guid: 05711bfea69772442afc322642928324, type: 2}
-  ExplodeCondition: 42
+  Center: {fileID: 7359329541054793128}
+  ExplodeCondition: 21
   TriggerCondition: 1
+  GoalItemId: 0
   ItemId: 0
   ItemType: 0
   ExplodeAudio: 0
   PrefabExplodeEffect: {fileID: 7184100239427420440, guid: 479b465fc6076d0499db874c4a58776b, type: 3}
   State: 0
+  ClickEffect: 1
   MergeLight: {fileID: 427476486757021300}
 --- !u!111 &-3156565219389305693
 Animation:
@@ -149,6 +152,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: ab63a3df50195e34fb020a8c4d23dd09, type: 2}
+  - {fileID: 7400000, guid: e077cfcd32c17dd41a55bc8d30247efc, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
